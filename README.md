@@ -31,7 +31,7 @@ Each role has specific permissions and dashboard views to ensure smooth and secu
 
 ## 🧠 Requirement Provider
 
-**Name:** Kamran Younis 
+**Name:** Kamran Younis  
 **Role:** Requirement Provider  
 **Qualification:** Reasearch Engineer at Namal  
 **Department:** AI Center, Namal University  
