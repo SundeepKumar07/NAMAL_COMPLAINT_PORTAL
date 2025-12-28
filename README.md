@@ -60,6 +60,12 @@ Each role has specific permissions and dashboard views to ensure smooth and secu
 
 ---
 
+## ⚙️ Meeting Minutes
+
+1. **Google Sheet**
+   ```bash
+   https://docs.google.com/spreadsheets/d/12_TNwLXdpk1PAGiSt_56hTMgauhxBHHHwzzxx_vtbSQ/edit?gid=0#gid=0
+   
 ## ⚙️ Installation and Setup
 
 1. **Clone the Repository**
