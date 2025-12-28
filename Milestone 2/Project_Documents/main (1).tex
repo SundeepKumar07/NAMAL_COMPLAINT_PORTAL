@@ -1,0 +1,1675 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{array}
+\usepackage{longtable}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{NCMMS SRS}
+\fancyhead[R]{Version 1.0}
+\fancyfoot[C]{\thepage}
+
+% Section formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Software Requirements Specification\\[0.5cm]}
+    {\LARGE for\\[0.5cm]}
+    {\Huge\bfseries Namal Complaint Management System\\[1.5cm]}
+    
+    {\Large Version 1.0\\[0.3cm]}
+    {\large Approved\\[2cm]}
+    
+    {\Large Prepared by:\\[0.3cm]}
+    {\large Dev Wizard Team\\[0.5cm]}
+    
+    \begin{tabular}{ll}
+        Sundeep Kumar & NUM-BSCS-2024-75 \\
+        Rehan Tariq & NUM-BSCS-2024-66 \\
+        Aimen Shafiq & NUM-BSCS-2024-04 \\
+    \end{tabular}
+    
+    \vfill
+    
+    {\large Department of Computer Science\\
+    Namal University, Mianwali\\[0.3cm]
+    CSC-225 -- Software Engineering\\[0.3cm]
+    \today}
+    
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Revision History
+\section*{Revision History}
+\addcontentsline{toc}{section}{Revision History}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{2cm}|p{2cm}|p{6cm}|p{3cm}|}
+\hline
+\textbf{Date} & \textbf{Version} & \textbf{Description} & \textbf{Author} \\
+\hline
+\today & 1.0 & Initial SRS Document & Dev Wizard Team \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+% 1. INTRODUCTION
+\section{Introduction}
+
+\subsection{Purpose}
+This Software Requirements Specification (SRS) document provides a complete description of the Namal Complaint Management System (NCMMS). The document specifies all functional and non-functional requirements for the system and is intended for:
+
+\begin{itemize}
+    \item Development team members who will design and implement the system
+    \item Project managers who will track project progress
+    \item Testers who will verify and validate the system
+    \item Requirement Provider (university administration) who will review and approve requirements
+    \item Maintenance personnel who will maintain the system after deployment
+\end{itemize}
+
+\subsection{Scope}
+The Namal Complaint Management and Maintenance System (NCMMS) is a web-based application designed to streamline the maintenance complaint management process at Namal University. The system will:
+
+\begin{itemize}
+    \item Replace the current informal, verbal complaint reporting system
+    \item Provide a centralized platform for complaint submission and tracking
+    \item Enable efficient assignment and monitoring of maintenance tasks
+    \item Improve transparency and accountability in complaint resolution
+    \item Generate reports and analytics on maintenance performance
+\end{itemize}
+
+\textbf{Benefits:}
+\begin{itemize}
+    \item Reduced complaint resolution time through systematic tracking
+    \item Enhanced user satisfaction through real-time status updates
+    \item Improved resource allocation and workload management
+    \item Data-driven insights for maintenance planning
+    \item Complete audit trail of all maintenance activities
+\end{itemize}
+
+\textbf{System will:}
+\begin{itemize}
+    \item Allow users (students, faculty, staff) to submit categorized complaints
+    \item Enable administrators to assign complaints to maintenance staff
+    \item Provide real-time complaint status tracking
+    \item Generate summary reports and performance metrics
+    \item Send notifications for complaint updates
+\end{itemize}
+
+\textbf{System will not:}
+\begin{itemize}
+    \item Handle financial transactions or budget management
+    \item Manage inventory of maintenance materials
+    \item Replace face-to-face emergency reporting procedures
+    \item Provide external vendor management capabilities
+\end{itemize}
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+
+\begin{table}[h]
+\begin{tabular}{|p{3cm}|p{10cm}|}
+\hline
+\textbf{Term} & \textbf{Definition} \\
+\hline
+NCMMS & Namal Complaint Management and maintenance System \\
+\hline
+RP & Requirement Provider - University administration representative \\
+\hline
+JWT & JSON Web Token - Authentication mechanism \\
+\hline
+MERN & MongoDB, Express.js, React, Node.js - Technology stack \\
+\hline
+Admin & System administrator with full access privileges \\
+\hline
+Complaint & A reported maintenance issue requiring attention \\
+\hline
+Ticket & Unique identifier assigned to each complaint \\
+\hline
+Status & Current state of complaint (Open, In Progress, Resolved, Closed) \\
+\hline
+Priority & Urgency level of complaint (Low, Medium, High, Critical) \\
+\hline
+Category & Type of maintenance issue (Electrical, Plumbing, IT, Furniture, Civil, HVAC) \\
+\hline
+End User & Students, faculty, or staff members who submit complaints \\
+\hline
+Maintenance Staff & Personnel assigned to resolve complaints \\
+\hline
+Dashboard & Main interface displaying complaint statistics and information \\
+\hline
+SRS & Software Requirements Specification \\
+\hline
+API & Application Programming Interface \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{References}
+
+\begin{enumerate}
+    \item IEEE Std 830-1984, IEEE Guide to Software Requirements Specifications
+    \item React Documentation. (2024). Retrieved from https://react.dev/
+    \item Express.js Foundation. (2024). Retrieved from https://expressjs.com/
+    \item MongoDB, Inc. (2024). MongoDB Official Documentation. Retrieved from https://www.mongodb.com/docs/
+    \item Cloudinary Ltd. (2024). API Documentation. Retrieved from https://cloudinary.com/documentation
+    \item Atlassian. (2024). Kanban Methodology Overview. Retrieved from https://www.atlassian.com/agile/kanban
+    \item NCMMS Project Proposal, Dev Wizard Team, November 2025
+    \item IEEE Std 729-1983, IEEE Standard Glossary of Software Engineering Terminology
+\end{enumerate}
+
+\subsection{Overview}
+The remainder of this document is organized as follows:
+
+\begin{itemize}
+    \item \textbf{Section 2: Overall Description} - Provides context for the system, including product perspective, functions, user characteristics, constraints, and assumptions
+    \item \textbf{Section 3: Specific Requirements} - Details all functional and non-functional requirements, external interfaces, and system features
+    \item \textbf{Appendix A: Use Case Diagram} - Visual representation of system interactions
+    \item \textbf{Appendix B: Context Diagram} - System boundary and external entities
+\end{itemize}
+
+\newpage
+
+% 2. OVERALL DESCRIPTION
+\section{Overall Description}
+
+\subsection{Product Perspective}
+The Namal Complaint Management System (NCMMS) is a new, self-contained web-based application designed specifically for Namal University. It operates independently and does not integrate with existing university systems in its initial release.
+
+\subsubsection{System Interfaces}
+The system consists of the following major components:
+
+\begin{itemize}
+    \item \textbf{Web Application Interface} - Browser-based user interface accessible via standard web browsers
+    \item \textbf{Backend Server} - Node.js/Express.js server handling business logic
+    \item \textbf{Database System} - MongoDB for data persistence
+    \item \textbf{Cloud Storage} - Cloudinary for image/file storage
+    \item \textbf{Authentication Module} - JWT-based security system
+\end{itemize}
+
+\subsubsection{User Interfaces}
+The system will provide responsive web interfaces optimized for:
+\begin{itemize}
+    \item Desktop browsers (Chrome, Firefox, Safari, Edge)
+    \item Tablet devices
+    \item Mobile devices (smartphones)
+\end{itemize}
+
+Key interface components include:
+\begin{itemize}
+    \item Login/Registration screens
+    \item User dashboard
+    \item Complaint submission form with image upload capability
+    \item Complaint tracking interface
+    \item Administrative panel for complaint management
+    \item Maintenance staff work queue
+    \item Reporting and analytics dashboard
+\end{itemize}
+
+\subsubsection{Hardware Interfaces}
+\begin{itemize}
+    \item \textbf{Client Side:} Any device with a modern web browser and internet connection
+    \item \textbf{Server Side:} Web server capable of running Node.js applications
+    \item \textbf{Storage:} Cloud storage for images and attachments via Cloudinary
+\end{itemize}
+
+\subsubsection{Software Interfaces}
+\begin{itemize}
+    \item \textbf{Operating System:} Platform-independent (runs on any OS supporting Node.js)
+    \item \textbf{Database:} MongoDB version 5.0 or higher
+    \item \textbf{Web Framework:} React/Next.js for frontend, Express.js for backend
+    \item \textbf{Runtime Environment:} Node.js version 18.x or higher
+    \item \textbf{Cloud Services:} Cloudinary API for media management
+\end{itemize}
+
+\subsubsection{Communications Interfaces}
+\begin{itemize}
+    \item HTTP/HTTPS protocols for client-server communication
+    \item RESTful API architecture
+    \item JSON data format for API requests and responses
+    \item WebSocket connection for real-time notifications (optional)
+    \item Email notifications via SMTP
+\end{itemize}
+
+\subsubsection{Memory Constraints}
+\begin{itemize}
+    \item Maximum file upload size: 5 MB per attachment
+    \item Server memory: Minimum 2 GB RAM recommended
+    \item Database storage: Scalable based on complaint volume
+\end{itemize}
+
+\subsection{Product Functions}
+The NCMMS provides the following major functions:
+
+\begin{enumerate}
+    \item \textbf{User Management}
+    \begin{itemize}
+        \item User registration and authentication
+        \item Role-based access control (Student/Faculty/Staff, Maintenance Staff, Administrator)
+        \item Profile management
+    \end{itemize}
+    
+    \item \textbf{Complaint Management}
+    \begin{itemize}
+        \item Submit new complaints with category, description, location, and images
+        \item View and track complaint status
+        \item Edit or cancel pending complaints
+        \item Add comments or updates to existing complaints
+    \end{itemize}
+    
+    \item \textbf{Administrative Functions}
+    \begin{itemize}
+        \item View all complaints with filtering and search capabilities
+        \item Assign complaints to maintenance staff
+        \item Update complaint status and priority
+        \item Review and approve complaint resolution
+        \item Manage user accounts and roles
+    \end{itemize}
+    
+    \item \textbf{Maintenance Staff Functions}
+    \begin{itemize}
+        \item View assigned complaints
+        \item Update work progress and status
+        \item Upload completion photos or documentation
+        \item Request reassignment if necessary
+    \end{itemize}
+    
+    \item \textbf{Reporting and Analytics}
+    \begin{itemize}
+        \item Generate complaint resolution reports
+        \item View performance metrics by category and staff member
+        \item Export data in CSV format
+        \item Display statistical dashboards
+    \end{itemize}
+    
+    \item \textbf{Notification System}
+    \begin{itemize}
+        \item Email notifications for complaint status changes
+        \item In-app notifications
+        \item Reminder notifications for pending complaints
+    \end{itemize}
+\end{enumerate}
+
+\subsection{User Characteristics}
+
+\subsubsection{End Users (Students, Faculty, Staff)}
+\begin{itemize}
+    \item \textbf{Education Level:} Undergraduate to postgraduate level
+    \item \textbf{Technical Expertise:} Basic computer and internet skills
+    \item \textbf{Usage Pattern:} Occasional users who submit complaints as needed
+    \item \textbf{Expectations:} Simple, intuitive interface with minimal training required
+\end{itemize}
+
+\subsubsection{Maintenance Staff}
+\begin{itemize}
+    \item \textbf{Education Level:} Varies (technical school to undergraduate)
+    \item \textbf{Technical Expertise:} Basic smartphone/computer operation skills
+    \item \textbf{Usage Pattern:} Regular daily users to check assigned tasks
+    \item \textbf{Expectations:} Clear work queue, easy status updates, mobile-friendly interface
+\end{itemize}
+
+\subsubsection{Administrators/Supervisors}
+\begin{itemize}
+    \item \textbf{Education Level:} Undergraduate or higher
+    \item \textbf{Technical Expertise:} Intermediate computer skills, familiar with management systems
+    \item \textbf{Usage Pattern:} Daily users for monitoring and management
+    \item \textbf{Expectations:} Comprehensive oversight tools, reporting capabilities, user management
+\end{itemize}
+
+\subsection{Constraints}
+
+\subsubsection{Regulatory Policies}
+\begin{itemize}
+    \item Must comply with university data protection policies
+    \item User data must be handled according to privacy regulations
+    \item Authentication must follow university security standards
+\end{itemize}
+
+\subsubsection{Hardware Limitations}
+\begin{itemize}
+    \item Must function on standard university network infrastructure
+    \item Should work on devices commonly available to students and staff
+    \item Image uploads limited by available storage capacity
+\end{itemize}
+
+\subsubsection{Interface Requirements}
+\begin{itemize}
+    \item Must be accessible via standard web browsers
+    \item Should not require plugin installations
+    \item Must work within university firewall restrictions
+\end{itemize}
+
+\subsubsection{Development Constraints}
+\begin{itemize}
+    \item Development must follow Kanban methodology
+    \item Must use MERN stack as specified
+    \item Project timeline: Academic semester constraints
+    \item Budget: Student project with limited resources
+\end{itemize}
+
+\subsubsection{Security Constraints}
+\begin{itemize}
+    \item All passwords must be encrypted
+    \item JWT tokens must be used for session management
+    \item File uploads must be validated and scanned
+    \item API endpoints must be protected against unauthorized access
+\end{itemize}
+
+\subsection{Assumptions and Dependencies}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+    \item Users have access to internet-connected devices
+    \item University will provide hosting infrastructure or cloud hosting budget
+    \item Users have valid university email addresses for registration
+    \item Maintenance staff are willing to adopt the digital system
+    \item Network connectivity is generally reliable on campus
+    \item Mobile devices used will have camera capability for photo uploads
+\end{itemize}
+
+\subsubsection{Dependencies}
+\begin{itemize}
+    \item Availability of MongoDB database service
+    \item Cloudinary API service availability and quota limits
+    \item Email server (SMTP) for sending notifications
+    \item Node.js runtime environment on hosting server
+    \item GitHub for version control and deployment
+    \item Vercel or similar platform for application deployment
+    \item Continued availability of chosen third-party libraries and frameworks
+    \item Approval and support from university administration
+    \item Timely feedback from Requirement Provider during development
+\end{itemize}
+
+\newpage
+
+% 3. SPECIFIC REQUIREMENTS
+\section{Specific Requirements}
+
+\subsection{External Interface Requirements}
+
+\subsubsection{User Interfaces}
+
+\paragraph{UI-1: Login Screen}
+\begin{itemize}
+    \item Input fields for email and password
+    \item "Remember Me" checkbox
+    \item "Forgot Password" link
+    \item "Login" button
+    \item Link to registration page
+    \item University logo and branding
+    \item Responsive design for mobile and desktop
+\end{itemize}
+
+\paragraph{UI-2: Registration Screen}
+\begin{itemize}
+    \item Input fields: Full Name, University ID, Email, Phone Number, Password, Confirm Password
+    \item Role selection dropdown (Student/Faculty/Staff)
+    \item Department/Program selection
+    \item Terms and conditions checkbox
+    \item "Register" button
+    \item Link back to login page
+\end{itemize}
+
+\paragraph{UI-3: User Dashboard}
+\begin{itemize}
+    \item Summary statistics: Total complaints, Open, In Progress, Resolved
+    \item Recent complaints list with status indicators
+    \item "Submit New Complaint" button prominently displayed
+    \item Quick filters: All, My Complaints, Open, Closed
+    \item Navigation menu: Dashboard, New Complaint, My Complaints, Profile, Logout
+\end{itemize}
+
+\paragraph{UI-4: Complaint Submission Form}
+\begin{itemize}
+    \item Category dropdown (Electrical, Plumbing, IT, Furniture, Civil, HVAC, Other)
+    \item Priority selection (Low, Medium, High, Critical)
+    \item Location dropdown or text field (Building, Room Number)
+    \item Title field (max 100 characters)
+    \item Description text area (max 1000 characters)
+    \item Image upload button (up to 3 images, max 5MB each)
+    \item Image preview thumbnails
+    \item "Submit" and "Cancel" buttons
+    \item Form validation with error messages
+\end{itemize}
+
+\paragraph{UI-5: Complaint Detail View}
+\begin{itemize}
+    \item Ticket ID and submission date
+    \item Status badge with color coding
+    \item Category and priority indicators
+    \item Location information
+    \item Complete description
+    \item Uploaded images in gallery view
+    \item Assigned staff member (if assigned)
+    \item Timeline of status changes
+    \item Comments section
+    \item "Add Comment" functionality
+    \item "Edit" and "Cancel" buttons (if applicable)
+\end{itemize}
+
+\paragraph{UI-6: Admin Dashboard}
+\begin{itemize}
+    \item Overall statistics: Total complaints, By category, By status, By priority
+    \item Pending assignments counter
+    \item Staff workload overview
+    \item Recent complaints table with sorting and filtering
+    \item Search functionality
+    \item Quick action buttons: Assign, Update Status, View Details
+    \item Navigation: Dashboard, All Complaints, Users, Staff, Reports
+\end{itemize}
+
+\paragraph{UI-7: Staff Work Queue}
+\begin{itemize}
+    \item List of assigned complaints
+    \item Filter by status and priority
+    \item Complaint cards showing key information
+    \item "Update Status" quick action
+    \item "View Details" link
+    \item "Mark Complete" button with photo upload option
+\end{itemize}
+
+\paragraph{UI-8: Reports Page}
+\begin{itemize}
+    \item Date range selector
+    \item Report type dropdown
+    \item Filter options: Category, Status, Staff Member
+    \item Visual charts: Bar chart, Pie chart, Line graph
+    \item Summary statistics table
+    \item "Export to CSV" button
+    \item Print-friendly layout
+\end{itemize}
+
+\subsubsection{Hardware Interfaces}
+
+\paragraph{HW-1: Client Device Interface}
+\begin{itemize}
+    \item The system shall be accessible from any device with:
+    \begin{itemize}
+        \item Modern web browser (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+        \item Minimum screen resolution: 320px width (mobile)
+        \item Internet connection (minimum 1 Mbps)
+        \item Camera capability for photo uploads (optional but recommended)
+    \end{itemize}
+\end{itemize}
+
+\paragraph{HW-2: Server Hardware}
+\begin{itemize}
+    \item The system shall operate on server hardware with:
+    \begin{itemize}
+        \item Minimum 2 CPU cores
+        \item Minimum 2 GB RAM
+        \item Minimum 20 GB storage
+        \item Network interface card with internet connectivity
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Software Interfaces}
+
+\paragraph{SW-1: MongoDB Database}
+\begin{itemize}
+    \item Database Management System: MongoDB version 5.0 or higher
+    \item Purpose: Store all application data including users, complaints, comments, and logs
+    \item Data Format: JSON/BSON documents
+    \item Connection: Mongoose ODM library for Node.js
+\end{itemize}
+
+\paragraph{SW-2: Node.js Runtime}
+\begin{itemize}
+    \item Runtime Environment: Node.js version 18.x or higher
+    \item Purpose: Execute server-side JavaScript code
+    \item Package Manager: npm or yarn for dependency management
+\end{itemize}
+
+\paragraph{SW-3: Express.js Framework}
+\begin{itemize}
+    \item Web Framework: Express.js version 4.x
+    \item Purpose: Handle HTTP requests, routing, and middleware
+    \item Interface: RESTful API endpoints
+\end{itemize}
+
+\paragraph{SW-4: React/Next.js Framework}
+\begin{itemize}
+    \item Frontend Framework: React 18.x or Next.js 13.x
+    \item Purpose: Build user interface components
+    \item Rendering: Client-side and server-side rendering support
+\end{itemize}
+
+\paragraph{SW-5: Cloudinary Service}
+\begin{itemize}
+    \item Cloud Storage Service: Cloudinary API
+    \item Purpose: Store and serve complaint images
+    \item Interface: REST API via Cloudinary SDK
+    \item Authentication: API key and secret
+    \item Storage Limit: Based on subscription plan
+\end{itemize}
+
+\paragraph{SW-6: Email Service}
+\begin{itemize}
+    \item Email Provider: SMTP-compatible service (e.g., Gmail, SendGrid)
+    \item Purpose: Send notification emails
+    \item Protocol: SMTP
+    \item Authentication: Username and password or API key
+\end{itemize}
+
+\subsubsection{Communications Interfaces}
+
+\paragraph{COM-1: HTTP/HTTPS Protocol}
+\begin{itemize}
+    \item The system shall use HTTPS protocol for all client-server communication
+    \item SSL/TLS encryption shall be enforced for production environment
+    \item HTTP methods supported: GET, POST, PUT, PATCH, DELETE
+\end{itemize}
+
+\paragraph{COM-2: RESTful API}
+\begin{itemize}
+    \item API Architecture: REST (Representational State Transfer)
+    \item Data Format: JSON for all request and response payloads
+    \item Authentication: Bearer token (JWT) in Authorization header
+    \item Base URL format: https://[domain]/api/v1/[resource]
+\end{itemize}
+
+\paragraph{COM-3: Email Communication}
+\begin{itemize}
+    \item Protocol: SMTP (Simple Mail Transfer Protocol)
+    \item Port: 587 (TLS) or 465 (SSL)
+    \item Email format: HTML with plain text fallback
+    \item Content: Notification messages about complaint status changes
+\end{itemize}
+
+\paragraph{COM-4: WebSocket (Optional)}
+\begin{itemize}
+    \item Protocol: WebSocket for real-time notifications
+    \item Library: Socket.io
+    \item Purpose: Push instant updates to connected clients
+    \item Fallback: HTTP polling if WebSocket not available
+\end{itemize}
+
+\subsection{Functional Requirements}
+
+\subsubsection{User Authentication and Authorization}
+
+\paragraph{FR-1.1: User Registration}
+The system shall allow new users to register by providing:
+\begin{itemize}
+    \item Full name (mandatory)
+    \item University ID number (mandatory)
+    \item University email address (mandatory)
+    \item Phone number (mandatory)
+    \item Password meeting security criteria (mandatory)
+    \item User role selection: Student/Faculty/Staff (mandatory)
+    \item Department/Program (mandatory)
+\end{itemize}
+
+\paragraph{FR-1.2: Email Verification}
+The system shall send a verification email to the registered email address and require users to verify their email before accessing the system.
+
+\paragraph{FR-1.3: User Login}
+The system shall authenticate users using email and password credentials and issue a JWT token upon successful authentication.
+
+\paragraph{FR-1.4: Password Requirements}
+The system shall enforce password requirements:
+\begin{itemize}
+    \item Minimum 8 characters
+    \item At least one uppercase letter
+    \item At least one lowercase letter
+    \item At least one number
+    \item At least one special character
+\end{itemize}
+
+\paragraph{FR-1.5: Password Reset}
+The system shall allow users to reset forgotten passwords by:
+\begin{itemize}
+    \item Requesting password reset via email
+    \item Receiving a time-limited reset link (valid for 1 hour)
+    \item Creating a new password meeting security criteria
+\end{itemize}
+
+\paragraph{FR-1.6: Session Management}
+The system shall maintain user sessions using JWT tokens with:
+\begin{itemize}
+    \item Token expiration time of 24 hours
+    \item Automatic logout upon token expiration
+    \item Refresh token capability for extended sessions
+\end{itemize}
+
+\paragraph{FR-1.7: Role-Based Access Control}
+The system shall implement three user roles with distinct permissions:
+\begin{itemize}
+    \item \textbf{End User:} Submit complaints, view own complaints, update profile
+    \item \textbf{Maintenance Staff:} View assigned complaints, update status, upload completion photos
+    \item \textbf{Administrator:} Full access to all features including user management, complaint assignment, and reporting
+\end{itemize}
+
+\subsubsection{Complaint Management}
+
+\paragraph{FR-2.1: Submit Complaint}
+The system shall allow authenticated end users to submit a new complaint with:
+\begin{itemize}
+    \item Category selection from: Electrical, Plumbing, IT, Furniture, Civil, HVAC, Other (mandatory)
+    \item Priority selection: Low, Medium, High, Critical (mandatory)
+    \item Location: Building name and room number (mandatory)
+    \item Title: Brief summary (max 100 characters) (mandatory)
+    \item Description: Detailed explanation (max 1000 characters) (mandatory)
+    \item Image attachments: Up to 3 images, max 5MB each (optional)
+\end{itemize}
+
+\paragraph{FR-2.2: Generate Ticket ID}
+The system shall automatically generate a unique ticket ID for each complaint in the format: NCMMS-YYYY-NNNN (e.g., NCMMS-2025-0001).
+
+\paragraph{FR-2.3: Complaint Validation}
+The system shall validate complaint submissions:
+\begin{itemize}
+    \item All mandatory fields must be filled
+    \item Images must be in supported formats (JPG, PNG, GIF)
+    \item Image file size must not exceed 5MB per file
+    \item Description must not contain inappropriate content
+\end{itemize}
+
+\paragraph{FR-2.4: Initial Complaint Status}
+The system shall set the status of newly submitted complaints to "Open".
+
+\paragraph{FR-2.5: View Own Complaints}
+The system shall allow users to view a list of all their submitted complaints with:
+\begin{itemize}
+    \item Ticket ID
+    \item Title
+    \item Category
+    \item Status with color coding
+    \item Submission date
+    \item Priority level
+\end{itemize}
+
+\paragraph{FR-2.6: View Complaint Details}
+The system shall allow users to view complete details of their complaints including:
+\begin{itemize}
+    \item All submission information
+    \item Current status and assigned staff (if applicable)
+    \item Status change timeline
+    \item Comments and updates
+    \item Uploaded images in full resolution
+\end{itemize}
+
+\paragraph{FR-2.7: Edit Pending Complaint}
+The system shall allow users to edit complaints that have "Open" status within 24 hours of submission.
+
+\paragraph{FR-2.8: Cancel Complaint}
+The system shall allow users to cancel their own complaints if the status is "Open".
+
+\paragraph{FR-2.9: Add Comment}
+The system shall allow users to add comments to their own complaints at any time.
+
+\paragraph{FR-2.10: Search Complaints}
+The system shall allow users to search their complaints by:
+\begin{itemize}
+    \item Ticket ID
+    \item Title keywords
+    \item Category
+    \item Status
+    \item Date range
+\end{itemize}
+
+\subsubsection{Administrative Functions}
+
+\paragraph{FR-3.1: View All Complaints}
+The system shall allow administrators to view all complaints in the system with filtering options:
+\begin{itemize}
+    \item By status: All, Open, Assigned, In Progress, Resolved, Closed
+    \item By category: All categories or specific category
+    \item By priority: All priorities or specific priority
+    \item By date range
+    \item By assigned staff member
+\end{itemize}
+
+\paragraph{FR-3.2: Assign Complaint}
+The system shall allow administrators to assign complaints to maintenance staff by:
+\begin{itemize}
+    \item Selecting available staff members by expertise/category
+    \item Setting expected completion date
+    \item Adding assignment notes
+    \item Automatically updating complaint status to "Assigned"
+\end{itemize}
+
+\paragraph{FR-3.3: Reassign Complaint}
+The system shall allow administrators to reassign complaints to different staff members with a reason for reassignment.
+
+\paragraph{FR-3.4: Update Priority}
+The system shall allow administrators to change the priority level of any complaint.
+
+\paragraph{FR-3.5: Update Status Manually}
+The system shall allow administrators to manually update complaint status to any valid state with a comment explaining the change.
+
+\paragraph{FR-3.6: Close Complaint}
+The system shall allow administrators to close resolved complaints after verification.
+
+\paragraph{FR-3.7: Reopen Complaint}
+The system shall allow administrators to reopen closed complaints if issues persist.
+
+\paragraph{FR-3.8: Delete Complaint}
+The system shall allow administrators to delete complaints that are duplicate or spam, with confirmation dialog.
+
+\paragraph{FR-3.9: View Staff Workload}
+The system shall provide administrators with a dashboard showing:
+\begin{itemize}
+    \item Number of complaints assigned to each staff member
+    \item Complaints by status for each staff member
+    \item Average resolution time per staff member
+    \item Staff availability status
+\end{itemize}
+
+\paragraph{FR-3.10: Manage Users}
+The system shall allow administrators to:
+\begin{itemize}
+    \item View list of all registered users
+    \item Search users by name, email, or ID
+    \item View user details and complaint history
+    \item Deactivate/activate user accounts
+    \item Change user roles
+\end{itemize}
+
+\paragraph{FR-3.11: Manage Staff}
+The system shall allow administrators to:
+\begin{itemize}
+    \item Add new maintenance staff members
+    \item Assign expertise categories to staff
+    \item Set staff availability status
+    \item Remove staff members from the system
+\end{itemize}
+
+\subsubsection{Maintenance Staff Functions}
+
+\paragraph{FR-4.1: View Assigned Complaints}
+The system shall provide maintenance staff with a work queue showing all complaints assigned to them, sorted by priority and due date.
+
+\paragraph{FR-4.2: Update Complaint Status}
+The system shall allow maintenance staff to update the status of assigned complaints to:
+\begin{itemize}
+    \item In Progress - when work begins
+    \item Resolved - when work is completed
+    \item Need Support - when additional resources required
+\end{itemize}
+
+\paragraph{FR-4.3: Add Work Notes}
+The system shall allow maintenance staff to add notes documenting work performed, materials used, and time spent.
+
+\paragraph{FR-4.4: Upload Completion Photos}
+The system shall allow maintenance staff to upload photos (up to 3 images, 5MB each) when marking a complaint as resolved.
+
+\paragraph{FR-4.5: Request Reassignment}
+The system shall allow maintenance staff to request reassignment of a complaint with a reason, which will notify administrators.
+
+\paragraph{FR-4.6: View Complaint History}
+The system shall allow maintenance staff to view their complaint resolution history and performance metrics.
+
+\subsubsection{Notification System}
+
+\paragraph{FR-5.1: Complaint Submission Notification}
+The system shall send an email notification to the user upon successful complaint submission containing ticket ID and summary.
+
+\paragraph{FR-5.2: Assignment Notification}
+The system shall send notifications when:
+\begin{itemize}
+    \item A complaint is assigned to maintenance staff (to staff member)
+    \item A complaint is assigned (to the user who submitted it)
+\end{itemize}
+
+\paragraph{FR-5.3: Status Change Notification}
+The system shall send email notifications to users when their complaint status changes (In Progress, Resolved, Closed).
+
+\paragraph{FR-5.4: Comment Notification}
+The system shall notify users via email when a new comment is added to their complaint by staff or administrators.
+
+\paragraph{FR-5.5: Reminder Notifications}
+The system shall send reminder notifications to maintenance staff for complaints approaching due date (24 hours before).
+
+\paragraph{FR-5.6: In-App Notifications}
+The system shall display in-app notification badges for:
+\begin{itemize}
+    \item New assignments (for staff)
+    \item Status updates (for users)
+    \item New comments
+\end{itemize}
+
+\subsubsection{Reporting and Analytics}
+
+\paragraph{FR-6.1: Generate Complaint Summary Report}
+The system shall generate reports showing:
+\begin{itemize}
+    \item Total complaints by date range
+    \item Breakdown by category
+    \item Breakdown by status
+    \item Breakdown by priority
+    \item Average resolution time
+\end{itemize}
+
+\paragraph{FR-6.2: Staff Performance Report}
+The system shall generate performance reports for each maintenance staff member showing:
+\begin{itemize}
+    \item Total assigned complaints
+    \item Total resolved complaints
+    \item Average resolution time
+    \item Pending complaints
+    \item Resolution rate percentage
+\end{itemize}
+
+\paragraph{FR-6.3: Category Analysis Report}
+The system shall generate reports analyzing complaints by category over time to identify recurring issues.
+
+\paragraph{FR-6.4: Export Reports}
+The system shall allow administrators to export reports in CSV format.
+
+\paragraph{FR-6.5: Dashboard Visualizations}
+The system shall display visual charts and graphs:
+\begin{itemize}
+    \item Bar chart: Complaints by category
+    \item Pie chart: Complaints by status
+    \item Line graph: Complaint trends over time
+    \item Status indicators for key metrics
+\end{itemize}
+
+\subsection{Performance Requirements}
+
+\paragraph{PF-1: Response Time}
+The system shall respond to user actions within the following time limits:
+\begin{itemize}
+    \item Page load time: Maximum 3 seconds for initial page load
+    \item Form submission: Maximum 2 seconds to process and confirm
+    \item Search results: Maximum 2 seconds to display results
+    \item Report generation: Maximum 10 seconds for standard reports
+    \item Image upload: Maximum 5 seconds per image
+\end{itemize}
+
+\paragraph{PF-2: Concurrent Users}
+The system shall support at least 100 concurrent active users without performance degradation.
+
+\paragraph{PF-3: Database Performance}
+The system shall execute database queries with:
+\begin{itemize}
+    \item Simple queries (single record): Maximum 100ms
+    \item Complex queries (reports): Maximum 3 seconds
+    \item Batch operations: Maximum 10 seconds
+\end{itemize}
+
+\paragraph{PF-4: Throughput}
+The system shall handle:
+\begin{itemize}
+    \item Minimum 50 complaint submissions per hour
+    \item Minimum 200 complaint views per hour
+    \item Minimum 100 status updates per hour
+\end{itemize}
+
+\paragraph{PF-5: Storage Capacity}
+The system shall accommodate:
+\begin{itemize}
+    \item Minimum 10,000 complaints
+    \item Minimum 30,000 images (assuming 3 images per complaint)
+    \item Minimum 5,000 user accounts
+    \item Data retention: Minimum 3 years
+\end{itemize}
+
+\paragraph{PF-6: Scalability}
+The system shall be designed to scale horizontally to handle increased load by adding additional server instances.
+
+\subsection{Design Constraints}
+
+\subsubsection{Standards Compliance}
+
+\paragraph{DC-1: Web Standards}
+The system shall comply with:
+\begin{itemize}
+    \item HTML5 standards for markup
+    \item CSS3 standards for styling
+    \item ECMAScript 2015+ standards for JavaScript
+    \item WCAG 2.1 Level AA accessibility guidelines
+\end{itemize}
+
+\paragraph{DC-2: REST API Standards}
+The system shall follow REST API best practices:
+\begin{itemize}
+    \item Use appropriate HTTP methods (GET, POST, PUT, DELETE)
+    \item Implement proper HTTP status codes
+    \item Use JSON for data exchange
+    \item Implement versioning in API URLs
+\end{itemize}
+
+\paragraph{DC-3: Security Standards}
+The system shall implement:
+\begin{itemize}
+    \item OWASP Top 10 security recommendations
+    \item Encryption for sensitive data at rest and in transit
+    \item Secure password hashing (bcrypt with minimum 10 rounds)
+    \item JWT token-based authentication
+\end{itemize}
+
+\subsubsection{Hardware Limitations}
+
+\paragraph{DC-4: Browser Compatibility}
+The system shall function correctly on:
+\begin{itemize}
+    \item Chrome version 90 or higher
+    \item Firefox version 88 or higher
+    \item Safari version 14 or higher
+    \item Microsoft Edge version 90 or higher
+\end{itemize}
+
+\paragraph{DC-5: Mobile Responsiveness}
+The system shall provide responsive design supporting:
+\begin{itemize}
+    \item Minimum screen width: 320px (mobile devices)
+    \item Tablet devices: 768px - 1024px
+    \item Desktop devices: 1025px and above
+\end{itemize}
+
+\paragraph{DC-6: Network Bandwidth}
+The system shall function with minimum internet speed of 1 Mbps for basic operations and 3 Mbps for optimal performance including image uploads.
+
+\subsubsection{Technology Constraints}
+
+\paragraph{DC-7: Technology Stack}
+The system shall be developed using:
+\begin{itemize}
+    \item Frontend: React.js or Next.js
+    \item Backend: Node.js with Express.js
+    \item Database: MongoDB
+    \item Authentication: JWT (JSON Web Tokens)
+    \item Cloud Storage: Cloudinary
+    \item Version Control: GitHub
+    \item Deployment: Vercel or similar platform
+\end{itemize}
+
+\paragraph{DC-8: Programming Language}
+The system shall be implemented using JavaScript/TypeScript for both frontend and backend.
+
+\paragraph{DC-9: Development Methodology}
+The system shall be developed following Kanban methodology with continuous integration and deployment practices.
+
+\subsection{Software System Attributes}
+
+\subsubsection{Reliability}
+
+\paragraph{AT-1: Availability}
+The system shall maintain 99\% uptime during operational hours (24/7 excluding scheduled maintenance).
+
+\paragraph{AT-2: Error Handling}
+The system shall:
+\begin{itemize}
+    \item Display user-friendly error messages for all error conditions
+    \item Log all errors on the server for debugging purposes
+    \item Provide graceful degradation when third-party services are unavailable
+    \item Not expose sensitive system information in error messages
+\end{itemize}
+
+\paragraph{AT-3: Data Backup}
+The system shall:
+\begin{itemize}
+    \item Perform automatic daily database backups
+    \item Retain backups for minimum 30 days
+    \item Store backups in a separate location from primary database
+\end{itemize}
+
+\paragraph{AT-4: Recovery}
+The system shall support recovery from failures with:
+\begin{itemize}
+    \item Maximum Recovery Time Objective (RTO): 4 hours
+    \item Maximum Recovery Point Objective (RPO): 24 hours
+\end{itemize}
+
+\subsubsection{Security}
+
+\paragraph{AT-5: Authentication Security}
+The system shall:
+\begin{itemize}
+    \item Implement account lockout after 5 failed login attempts for 30 minutes
+    \item Require strong passwords as specified in FR-1.4
+    \item Use HTTPS for all communications
+    \item Implement JWT tokens with expiration
+\end{itemize}
+
+\paragraph{AT-6: Authorization}
+The system shall:
+\begin{itemize}
+    \item Verify user permissions before allowing access to any resource
+    \item Implement role-based access control (RBAC)
+    \item Prevent privilege escalation attacks
+    \item Log all authorization failures
+\end{itemize}
+
+\paragraph{AT-7: Data Protection}
+The system shall:
+\begin{itemize}
+    \item Encrypt passwords using bcrypt hashing
+    \item Encrypt sensitive data in database
+    \item Validate and sanitize all user inputs to prevent SQL injection and XSS attacks
+    \item Implement CSRF protection for all state-changing operations
+\end{itemize}
+
+\paragraph{AT-8: File Upload Security}
+The system shall:
+\begin{itemize}
+    \item Validate file types and reject executables
+    \item Scan uploaded files for malware
+    \item Limit file sizes to prevent denial of service
+    \item Store uploaded files in secure cloud storage
+\end{itemize}
+
+\paragraph{AT-9: Session Security}
+The system shall:
+\begin{itemize}
+    \item Invalidate sessions upon logout
+    \item Implement session timeout after 30 minutes of inactivity
+    \item Use secure, HTTP-only cookies for session management
+\end{itemize}
+
+\paragraph{AT-10: Audit Trail}
+The system shall maintain audit logs for:
+\begin{itemize}
+    \item User login/logout activities
+    \item Complaint submissions and modifications
+    \item Administrative actions
+    \item Status changes
+    \item User management actions
+\end{itemize}
+
+\subsubsection{Maintainability}
+
+\paragraph{AT-11: Code Quality}
+The system shall:
+\begin{itemize}
+    \item Follow consistent coding standards and style guides
+    \item Include inline comments for complex logic
+    \item Maintain code documentation
+    \item Achieve minimum 70\% code coverage with unit tests
+\end{itemize}
+
+\paragraph{AT-12: Modularity}
+The system shall:
+\begin{itemize}
+    \item Implement modular architecture with clear separation of concerns
+    \item Use reusable components and functions
+    \item Minimize coupling between modules
+    \item Document module interfaces and dependencies
+\end{itemize}
+
+\paragraph{AT-13: Version Control}
+The system shall:
+\begin{itemize}
+    \item Use Git for version control
+    \item Follow branching strategy (main, development, feature branches)
+    \item Require code reviews before merging to main branch
+    \item Tag releases with semantic versioning
+\end{itemize}
+
+\paragraph{AT-14: Database Maintenance}
+The system shall:
+\begin{itemize}
+    \item Support database schema migrations
+    \item Include scripts for data cleanup and maintenance
+    \item Document database structure and relationships
+\end{itemize}
+
+\subsubsection{Portability}
+
+\paragraph{AT-15: Platform Independence}
+The system shall run on any platform supporting:
+\begin{itemize}
+    \item Node.js runtime environment
+    \item Modern web browsers
+    \item No platform-specific dependencies
+\end{itemize}
+
+\paragraph{AT-16: Data Portability}
+The system shall:
+\begin{itemize}
+    \item Support export of data in standard formats (CSV, JSON)
+    \item Provide APIs for data migration
+    \item Document data schemas for external integration
+\end{itemize}
+
+\subsubsection{Usability}
+
+\paragraph{AT-17: User Interface Consistency}
+The system shall maintain consistent:
+\begin{itemize}
+    \item Navigation patterns across all pages
+    \item Visual design and color scheme
+    \item Terminology and labeling
+    \item Button placement and behavior
+\end{itemize}
+
+\paragraph{AT-18: Ease of Use}
+The system shall:
+\begin{itemize}
+    \item Allow new users to submit a complaint within 5 minutes without training
+    \item Provide contextual help and tooltips where needed
+    \item Display clear progress indicators for multi-step processes
+    \item Minimize required clicks to complete common tasks
+\end{itemize}
+
+\paragraph{AT-19: Error Prevention}
+The system shall:
+\begin{itemize}
+    \item Validate inputs in real-time with immediate feedback
+    \item Provide confirmation dialogs for destructive actions
+    \item Auto-save draft data to prevent data loss
+    \item Highlight required fields clearly
+\end{itemize}
+
+\paragraph{AT-20: Accessibility}
+The system shall:
+\begin{itemize}
+    \item Support keyboard navigation for all functions
+    \item Provide adequate color contrast (WCAG AA standard)
+    \item Include alt text for all images
+    \item Support screen readers
+    \item Allow text size adjustment
+\end{itemize}
+
+\paragraph{AT-21: Help and Documentation}
+The system shall provide:
+\begin{itemize}
+    \item FAQ section addressing common questions
+    \item User guide for basic operations
+    \item Video tutorials for key features
+    \item Contact information for technical support
+\end{itemize}
+
+\subsection{Other Requirements}
+
+\subsubsection{Database Requirements}
+
+\paragraph{OR-1: Data Model}
+The system database shall include the following collections/tables:
+\begin{itemize}
+    \item Users: User profiles and authentication information
+    \item Complaints: All complaint records
+    \item Comments: User and staff comments on complaints
+    \item Categories: Complaint categories and subcategories
+    \item Staff: Maintenance staff profiles and expertise
+    \item Notifications: Notification queue and history
+    \item AuditLogs: System activity logs
+    \item Settings: System configuration parameters
+\end{itemize}
+
+\paragraph{OR-2: Data Integrity}
+The system shall:
+\begin{itemize}
+    \item Enforce referential integrity between related collections
+    \item Prevent orphaned records
+    \item Validate data types and constraints at database level
+    \item Use transactions for operations affecting multiple collections
+\end{itemize}
+
+\paragraph{OR-3: Data Retention}
+The system shall:
+\begin{itemize}
+    \item Retain complaint records for minimum 3 years
+    \item Archive old complaints after 2 years to secondary storage
+    \item Retain audit logs for minimum 1 year
+    \item Soft-delete user data to maintain historical references
+\end{itemize}
+
+\subsubsection{Operational Requirements}
+
+\paragraph{OR-4: Installation}
+The system shall:
+\begin{itemize}
+    \item Provide installation scripts for automated deployment
+    \item Include configuration templates with sensible defaults
+    \item Document all environment variables and dependencies
+    \item Support containerized deployment using Docker
+\end{itemize}
+
+\paragraph{OR-5: System Monitoring}
+The system shall:
+\begin{itemize}
+    \item Log all critical operations and errors
+    \item Provide health check endpoints for monitoring tools
+    \item Track key performance metrics (response times, error rates)
+    \item Alert administrators for critical failures
+\end{itemize}
+
+\paragraph{OR-6: Backup and Recovery}
+The system shall:
+\begin{itemize}
+    \item Support automated backup procedures
+    \item Provide manual backup triggering capability
+    \item Include database restore procedures
+    \item Test backup integrity regularly
+\end{itemize}
+
+\paragraph{OR-7: System Updates}
+The system shall:
+\begin{itemize}
+    \item Support zero-downtime deployment for minor updates
+    \item Provide rollback capability for failed updates
+    \item Notify administrators of available updates
+    \item Maintain backward compatibility for API versions
+\end{itemize}
+
+\subsubsection{Legal and Compliance Requirements}
+
+\paragraph{OR-8: Data Privacy}
+The system shall:
+\begin{itemize}
+    \item Comply with university data protection policies
+    \item Obtain user consent for data collection
+    \item Allow users to view their stored personal data
+    \item Provide data deletion capability upon request
+\end{itemize}
+
+\paragraph{OR-9: Terms of Service}
+The system shall:
+\begin{itemize}
+    \item Display terms of service during registration
+    \item Require acceptance of terms before account creation
+    \item Provide accessible privacy policy
+    \item Document acceptable use policy
+\end{itemize}
+
+\paragraph{OR-10: Intellectual Property}
+The system shall:
+\begin{itemize}
+    \item Use only properly licensed third-party libraries
+    \item Display appropriate copyright notices
+    \item Document all open-source components and their licenses
+\end{itemize}
+
+\newpage
+
+% APPENDICES
+\appendix
+
+\section{Use Case Diagram}
+
+\subsection{Primary Actors}
+\begin{itemize}
+    \item End User (Student/Faculty/Staff)
+    \item Maintenance Staff
+    \item Administrator
+\end{itemize}
+
+\subsection{Use Cases}
+
+\subsubsection{End User Use Cases}
+\begin{enumerate}
+    \item Register Account
+    \item Login
+    \item Submit Complaint
+    \item View My Complaints
+    \item View Complaint Details
+    \item Edit Complaint
+    \item Cancel Complaint
+    \item Add Comment
+    \item Track Complaint Status
+    \item Update Profile
+    \item Reset Password
+    \item Logout
+\end{enumerate}
+
+\subsubsection{Maintenance Staff Use Cases}
+\begin{enumerate}
+    \item Login
+    \item View Assigned Complaints
+    \item Update Complaint Status
+    \item Add Work Notes
+    \item Upload Completion Photos
+    \item Request Reassignment
+    \item View Work History
+    \item Update Profile
+    \item Logout
+\end{enumerate}
+
+\subsubsection{Administrator Use Cases}
+\begin{enumerate}
+    \item Login
+    \item View All Complaints
+    \item Assign Complaint to Staff
+    \item Reassign Complaint
+    \item Update Complaint Priority
+    \item Update Complaint Status
+    \item Close Complaint
+    \item Reopen Complaint
+    \item Delete Complaint
+    \item Manage Users
+    \item Manage Staff
+    \item Generate Reports
+    \item Export Data
+    \item View Analytics Dashboard
+    \item Configure System Settings
+    \item Logout
+\end{enumerate}
+
+\subsection{Use Case Relationships}
+\begin{itemize}
+    \item \textit{Submit Complaint} includes \textit{Upload Images}
+    \item \textit{View Complaint Details} includes \textit{View Comments}
+    \item \textit{Update Complaint Status} extends \textit{Add Work Notes}
+    \item \textit{Generate Reports} extends \textit{Export Data}
+    \item All use cases require \textit{Login} (except Register Account and Reset Password)
+\end{itemize}
+
+\subsection{Use Case Diagram Description}
+
+The use case diagram illustrates the interactions between actors and the NCMMS system. The diagram includes:
+
+\begin{itemize}
+    \item \textbf{System Boundary}: Represented by a rectangle labeled "NCMMS"
+    \item \textbf{Primary Actors}: End User, Maintenance Staff, Administrator (shown as stick figures outside the system boundary)
+    \item \textbf{Use Cases}: Shown as ovals inside the system boundary
+    \item \textbf{Relationships}: Lines connecting actors to use cases, with <<include>> and <<extend>> stereotypes where applicable
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\fbox{
+\begin{minipage}{0.9\textwidth}
+\centering
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \includegraphics[width=12cm]{useCase.png}
+\end{enumerate}
+\vspace{0.5cm}
+\end{minipage}
+}
+\caption{Use Case Diagram - Namal Complaint Management System}
+\label{fig:usecase}
+\end{figure}
+
+\textit{To include your diagram: Create the diagram using the tools mentioned, export it as usecase\_diagram.png, place it in the same folder as this .tex file, and uncomment the includegraphics command above.}
+
+\newpage
+
+\section{Context Diagram}
+
+\subsection{System Boundary}
+The context diagram defines the boundary of the Namal Complaint Management System and shows its interactions with external entities.
+
+\subsection{External Entities}
+
+\subsubsection{Primary External Entities}
+\begin{enumerate}
+    \item \textbf{End Users} (Students, Faculty, Staff)
+    \begin{itemize}
+        \item Input: User credentials, complaint details, images, comments
+        \item Output: Complaint status, notifications, reports
+    \end{itemize}
+
+    \item \textbf{Maintenance Team}
+    \begin{itemize}
+        \item Input: Assigned Complaints or Duty
+        \item Output: Mark Complaints as solved or unsolved
+    \end{itemize}
+    
+    \item \textbf{Administrators}
+    \begin{itemize}
+        \item Input: Complaint assignments, user management actions, configuration
+        \item Output: System reports, analytics, user data
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Secondary External Entities}
+\begin{enumerate}
+    \item \textbf{Complaint Storage}
+    \begin{itemize}
+        \item Output: Complaint Data
+    \end{itemize}
+    
+    \item \textbf{Constraints Data}
+    \begin{itemize}
+        \item Input: Login Constraints
+        \item Output: Portal Access
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Data Flows}
+\begin{enumerate}
+    \item End User → System: Submit complaint, View complaints, Add comments
+    \item System → End User: Complaint status, Notifications, Reports
+    \item Maintenance Staff → System: Status updates, Work notes, Photos
+    \item System → Maintenance Staff: Assigned complaints, Notifications
+    \item Administrator → System: Assignments, User management, Configuration
+    \item System → Administrator: Analytics, Reports, System data
+    \item System → Complaints: complaints Data
+    \item Complaints → System: complaints retrieval
+    \item System → Constraints: Login constraints
+    \item Constraints → System: Portal Access
+\end{enumerate}
+
+\subsection{Context Diagram Description}
+
+The context diagram defines the boundary of the Namal Complaint Management System and shows its interactions with external entities. This is a Level 0 Data Flow Diagram (DFD).
+
+\subsubsection{System Boundary}
+The NCMMS is represented as a single circle or rounded rectangle in the center of the diagram, containing the text "Namal Complaint Management System (NCMMS)".
+
+\subsubsection{External Entities and Data Flows}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|p{3.5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{External Entity} & \textbf{Input to System} & \textbf{Output from System} \\
+\hline
+End Users (Students, Faculty, Staff) & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Login credentials
+    \item Complaint details
+    \item Images
+    \item Comments
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Complaint status
+    \item Ticket ID
+    \item Notifications
+    \item Status updates
+\end{itemize} \\
+\hline
+Maintenance Staff & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Login credentials
+    \item Status updates
+    \item Work notes
+    \item Completion photos
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Assigned complaints
+    \item Work queue
+    \item Notifications
+    \item Task details
+\end{itemize} \\
+\hline
+Administrators & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Login credentials
+    \item Assignment data
+    \item User management actions
+    \item Configuration settings
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item System reports
+    \item Analytics data
+    \item User lists
+    \item System status
+\end{itemize} \\
+\hline
+Complaints (MongoDB Document) & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Complaints Storage
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Complaints Access
+\end{itemize} \\
+\hline
+Credentials & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item End dUser
+    \item Maintenance Team Crdentails
+     \item Admin Credentials
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Image files
+    \item Upload requests
+    \item Register Account
+\end{itemize} \\
+\hline
+MongoDB Database & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Stored data
+    \item Query results
+\end{itemize} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item CRUD operations
+    \item Data queries
+\end{itemize} \\
+\hline
+\end{tabular}
+\caption{External Entities and Data Flows}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\fbox{
+\begin{minipage}{0.9\textwidth}
+\centering
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \includegraphics[width=12cm]{ContextDiagram.drawio (1).png}
+\end{enumerate}
+\vspace{0.5cm}
+\end{minipage}
+}
+\caption{Context Diagram - NCMMS System Boundary and External Entities}
+\label{fig:context}
+\end{figure}
+
+\subsubsection{Diagram Elements Explanation}
+
+\begin{itemize}
+    \item \textbf{Central Process (Circle/Rounded Rectangle)}: Represents the entire NCMMS as a single system
+    \item \textbf{External Entities (Rectangles)}: Represent people, systems, or organizations that are outside the NCMMS boundary but interact with it
+    \item \textbf{Data Flows (Arrows)}: Show the movement of data between external entities and the system. Each arrow should be labeled with the type of data flowing
+    \item \textbf{System Boundary}: Implicitly defined by what's inside vs. outside the central circle
+\end{itemize}
+
+\subsubsection{Key Points}
+\begin{itemize}
+    \item This is a high-level view showing only the system and its environment
+    \item No internal system details are shown (that's for lower-level DFDs)
+    \item All major external interactions must be represented
+    \item Data flows should be named clearly and specifically
+    \item This diagram helps stakeholders understand what the system does from an external perspective
+\end{itemize}
+
+\textit{Note: Once you create the diagram, save it in the same directory as this .tex file and uncomment the includegraphics command to display it in the compiled PDF.}
+
+\newpage
+
+\section{Sample Screen Mockups}
+
+\textit{This section should include wireframes or mockups of key screens:}
+
+\begin{enumerate}
+    \item Login Screen
+    \item User Dashboard
+    \item Complaint Submission Form
+    \item Complaint Detail View
+    \item Admin Dashboard
+    \item Staff Work Queue
+    \item Reports Page
+\end{enumerate}
+
+\textit{Note: Screen mockups should be created using Figma as specified in the project proposal and included in this section.}
+
+\newpage
+
+\section{Traceability Matrix}
+
+\begin{longtable}{|p{3cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Components} \\
+\hline
+FR-1.1 & User Registration & Authentication Module, User Database \\
+\hline
+FR-1.3 & User Login & Authentication Module, JWT Service \\
+\hline
+FR-2.1 & Submit Complaint & Complaint Module, File Upload Service \\
+\hline
+FR-2.2 & Generate Ticket ID & Complaint Module, ID Generator \\
+\hline
+FR-3.2 & Assign Complaint & Admin Module, Notification Service \\
+\hline
+FR-4.2 & Update Status & Staff Module, Status Manager \\
+\hline
+FR-5.1 & Submission Notification & Notification Service, Email Service \\
+\hline
+FR-6.1 & Generate Reports & Reporting Module, Analytics Engine \\
+\hline
+PF-1 & Response Time & Performance Optimization, Caching \\
+\hline
+AT-5 & Authentication Security & Security Module, Encryption Service \\
+\hline
+AT-17 & UI Consistency & Frontend Components, Style Guide \\
+\hline
+\end{longtable}
+
+\textit{Note: This is a sample traceability matrix. A complete matrix should map all requirements to their implementing components and test cases.}
+
+\newpage
+
+\section{Glossary of Terms}
+
+\begin{description}
+    \item[API] Application Programming Interface - A set of protocols for building software applications
+    \item[Assignment] The act of allocating a complaint to a specific maintenance staff member
+    \item[Audit Trail] A chronological record of system activities
+    \item[Backend] Server-side application logic and database operations
+    \item[Category] Classification of complaint type (Electrical, Plumbing, IT, etc.)
+    \item[Cloudinary] Third-party cloud service for image storage and delivery
+    \item[Comment] A textual note added to a complaint by users or staff
+    \item[CRUD] Create, Read, Update, Delete - Basic database operations
+    \item[Dashboard] Main interface showing summary information and statistics
+    \item[End User] Students, faculty, or staff who submit complaints
+    \item[Express.js] Web application framework for Node.js
+    \item[Frontend] Client-side user interface of the application
+    \item[HTTPS] Secure version of HTTP protocol with encryption
+    \item[JWT] JSON Web Token - Compact, URL-safe token for authentication
+    \item[Kanban] Agile project management methodology using visual workflow
+    \item[MERN Stack] Technology stack using MongoDB, Express, React, and Node.js
+    \item[MongoDB] NoSQL document database
+    \item[Next.js] React framework for production-grade applications
+    \item[Node.js] JavaScript runtime environment for server-side programming
+    \item[ODM] Object Document Mapper - Maps objects to database documents
+    \item[Priority] Urgency level of a complaint (Low, Medium, High, Critical)
+    \item[React] JavaScript library for building user interfaces
+    \item[REST] Representational State Transfer - Architectural style for APIs
+    \item[Role] User permission level (End User, Staff, Administrator)
+    \item[Status] Current state of complaint (Open, Assigned, In Progress, Resolved, Closed)
+    \item[Ticket ID] Unique identifier for each complaint
+    \item[Workload] Number of complaints assigned to a staff member
+    \item[Work Queue] List of complaints assigned to maintenance staff
+\end{description}
+
+\end{document}
