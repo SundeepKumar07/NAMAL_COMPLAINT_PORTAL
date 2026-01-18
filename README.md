@@ -71,6 +71,13 @@ Each role has specific permissions and dashboard views to ensure smooth and secu
 1. **Figma Prototype**
    ```bash
    https://www.figma.com/proto/eIbQy0a0riT1HzmyEeLnGn/Namal-Complaint-Management-System?node-id=1-3382&starting-point-node-id=29%3A2
+
+
+## LinkedIn Post
+
+1. **Post**
+   ```bash
+   https://www.linkedin.com/posts/rehantariq66_softwareengineering-academicproject-srs-activity-7418711998634475520-ogwZ?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEAOqmkBt37zDRdXI5ksq1kg1kqWAsPKDNM
    
 ## ⚙️ Installation and Setup
 
