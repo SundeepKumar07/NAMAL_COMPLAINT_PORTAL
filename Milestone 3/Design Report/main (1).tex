@@ -1,0 +1,528 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{NCMMS Design Document}
+\fancyhead[R]{Version 1.0}
+\fancyfoot[C]{\thepage}
+
+% Section formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries System Design Document\\[0.5cm]}
+    {\LARGE for\\[0.5cm]}
+    {\Huge\bfseries Namal Complaint Management System\\[1.5cm]}
+    
+    {\Large Project Milestone 3\\[0.3cm]}
+    {\Large Version 1.0\\[0.3cm]}
+    {\large \today\\[2cm]}
+    
+    {\Large Prepared by:\\[0.3cm]}
+    {\large Dev Wizard Team\\[0.5cm]}
+    
+    \begin{tabular}{ll}
+        Sundeep Kumar & NUM-BSCS-2024-75 \\
+        Rehan Tariq & NUM-BSCS-2024-66 \\
+        Aimen Shafiq & NUM-BSCS-2024-04 \\
+    \end{tabular}
+    
+    \vfill
+    
+    {\large Department of Computer Science\\
+    Namal University, Mianwali\\[0.3cm]
+    CSC-225 -- Software Engineering}
+    
+\end{titlepage}
+
+% Document Control
+\section*{Document Control}
+\addcontentsline{toc}{section}{Document Control}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Document Title} & System Design Document for Namal Complaint Management System \\
+\hline
+\textbf{Project Name} & NCMMS - Namal Complaint Management System \\
+\hline
+\textbf{Version} & 1.0 \\
+\hline
+\textbf{Date} & \today \\
+\hline
+\textbf{Status} & Final \\
+\hline
+\textbf{GitHub Repository} & \url{https://github.com/SundeepKumar07/NAMAL_COMPLAINT_PORTAL} \\
+\hline
+\textbf{Figma Prototype} & \url{https://www.figma.com/proto/eIbQy0a0riT1HzmyEeLnGn/} \\
+\hline
+\textbf{Meeting Minutes} & \url{https://docs.google.com/spreadsheets/d/12_TNwLXdpk1PAGiSt_56hTMgauhxBHHHwzzxx_vtbSQ/} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{Revision History}
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{2.5cm}|p{2cm}|p{5.5cm}|p{3cm}|}
+\hline
+\textbf{Date} & \textbf{Version} & \textbf{Description} & \textbf{Author} \\
+\hline
+\today & 1.0 & Initial Design Document & Dev Wizard Team \\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% List of Figures
+\listoffigures
+\newpage
+
+% 1. INTRODUCTION
+\section{Introduction}
+
+\subsection{Purpose}
+This System Design Document provides a comprehensive design specification for the Namal Complaint Management System (NCMMS). The document translates the requirements specified in the approved Software Requirements Specification (SRS) into a detailed system design that serves as a blueprint for implementation.
+
+This document is intended for:
+\begin{itemize}
+    \item Development team members who will implement the system
+    \item System architects who need to understand the overall system structure
+    \item Quality assurance team for validation and verification
+    \item Project stakeholders for design review and approval
+    \item Maintenance personnel for future system evolution
+\end{itemize}
+
+\subsection{Scope}
+The design encompasses all aspects of the NCMMS system including:
+\begin{itemize}
+    \item System architecture design
+    \item Behavioral models showing system dynamics and workflows
+    \item Structural models depicting system components and their relationships
+    \item User interface design through interactive prototypes
+    \item Complete traceability from requirements to design elements
+\end{itemize}
+
+\subsection{Document Organization}
+This document is organized into the following sections:
+
+\begin{description}
+    \item[Section 2:] Design Assumptions and Constraints
+    \item[Section 3:] Key Design Decisions
+    \item[Section 4:] Behavioral Diagrams
+    \item[Section 5:] Structural Diagrams
+    \item[Section 6:] Requirements-Design Traceability
+    \item[Section 7:] Prototype Design
+    \item[Section 8:] Project Resources
+    \item[Section 9:] Meeting Summary
+\end{description}
+
+\subsection{Design Methodology}
+The system design follows object-oriented design principles and uses standard UML notation. The design process involved:
+
+\begin{enumerate}
+    \item Requirements Analysis - Review of approved SRS document
+    \item Behavioral Modeling - Creation of use case, data flow, sequence, and activity diagrams
+    \item Structural Modeling - Definition of system structure through class and component diagrams
+    \item Prototype Development - Creation of interactive Figma prototype
+    \item Stakeholder Validation - Review meetings with Requirement Provider
+    \item Traceability Analysis - Mapping of requirements to design elements
+\end{enumerate}
+
+\subsection{Reference Documents}
+\begin{enumerate}
+    \item Software Requirements Specification (SRS) for NCMMS, Version 1.0
+    \item IEEE Std 830-1984, IEEE Guide to Software Requirements Specifications
+    \item UML 2.5 Specification
+    \item NCMMS Project Proposal, Dev Wizard Team, November 2025
+\end{enumerate}
+
+\newpage
+
+% 2. DESIGN ASSUMPTIONS AND CONSTRAINTS
+\section{Design Assumptions and Constraints}
+
+\subsection{Design Assumptions}
+
+\subsubsection{User Environment Assumptions}
+\begin{enumerate}
+    \item Users have reliable internet access with minimum 1 Mbps bandwidth
+    \item Users have access to devices with modern web browsers
+    \item Three distinct user roles are sufficient: End User, Maintenance Staff, Administrator
+    \item End users possess basic computer literacy and can navigate web interfaces
+    \item All users have valid university email addresses for authentication
+    \item Most users have devices with camera capability for uploading complaint images
+\end{enumerate}
+
+\subsubsection{Operational Assumptions}
+\begin{enumerate}
+    \item Sufficient maintenance staff will be available to handle complaints
+    \item At least one administrator will be available during operational hours
+    \item System will handle average of 50-100 complaints per day
+    \item Peak usage will not exceed 100 concurrent users
+    \item Database will grow approximately 10,000 complaints per year
+\end{enumerate}
+
+\subsection{Design Constraints}
+
+\subsubsection{Platform Constraints}
+\begin{enumerate}
+    \item System must be web-based application
+    \item Must support Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+    \item System must not require browser plugins or extensions
+    \item Must support responsive design for screen widths from 320px to 1920px+
+    \item System requires continuous internet connectivity
+\end{enumerate}
+
+\subsubsection{Performance Constraints}
+\begin{enumerate}
+    \item Page load time must not exceed 3 seconds
+    \item System must support minimum 100 concurrent users
+    \item Maximum file upload size: 5MB per image
+    \item Standard reports must generate within 10 seconds
+\end{enumerate}
+
+\subsubsection{Security Constraints}
+\begin{enumerate}
+    \item Passwords must meet complexity requirements (8+ characters, uppercase, lowercase, number, special character)
+    \item User sessions must expire after 24 hours or 30 minutes of inactivity
+    \item All sensitive data must be encrypted at rest and in transit
+    \item Role-based access control must be strictly enforced
+    \item All production traffic must use HTTPS protocol
+\end{enumerate}
+
+\subsubsection{Business Constraints}
+\begin{enumerate}
+    \item Project operates under student project budget constraints
+    \item Development must align with academic semester schedule
+    \item Team limited to 3 members
+    \item Design must be approved by Requirement Provider
+\end{enumerate}
+
+\newpage
+
+% 3. KEY DESIGN DECISIONS
+\section{Key Design Decisions}
+
+\subsection{Three-Tier Architecture}
+\textbf{Decision:} Adopt a three-tier architecture with separation between presentation, business logic, and data layers.
+
+\textbf{Rationale:}
+\begin{itemize}
+    \item Clear separation of concerns
+    \item Each tier can be scaled independently
+    \item Easier to maintain and test
+    \item Supports team collaboration
+\end{itemize}
+
+\subsection{Role-Based Access Control}
+\textbf{Decision:} Implement three distinct user roles with specific permissions.
+
+\textbf{Rationale:}
+\begin{itemize}
+    \item Ensures security and data privacy
+    \item Different users have different needs
+    \item Simplifies permission management
+    \item Aligns with organizational structure
+\end{itemize}
+
+\subsection{Component Organization}
+\textbf{Decision:} Organize system into modular functional components.
+
+\textbf{Rationale:}
+\begin{itemize}
+    \item Each module has clear responsibility
+    \item Modules can be developed independently
+    \item Easier to test and debug
+    \item Supports code reusability
+\end{itemize}
+
+\newpage
+
+% 4. BEHAVIORAL DIAGRAMS
+\section{Behavioral Diagrams}
+
+\subsection{Use Case Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{SE diagrams/Use Case.jpeg}
+\caption{Use Case Diagram}
+\label{fig:usecase}
+\end{figure}
+
+\newpage
+
+\subsection{Data Flow Diagrams}
+
+\subsubsection{Level 0 - Context Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{SE diagrams/DFD 0.jpeg}
+\caption{Data Flow Diagram - Level 0}
+\label{fig:dfd0}
+\end{figure}
+
+\newpage
+
+\subsubsection{Level 1 DFD}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm, height=18cm]{SE diagrams/DFD 1.png}
+\caption{Data Flow Diagram - Level 1}
+\label{fig:dfd1}
+\end{figure}
+
+\newpage
+
+\subsubsection{Level 2 DFD}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm, height=18cm]{SE diagrams/DFD 2.png}
+\caption{Data Flow Diagram - Level 2}
+\label{fig:dfd2}
+\end{figure}
+
+\newpage
+
+\subsection{Sequence Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm, height=18cm]{SE diagrams/Sequence Diagram.png}
+\caption{Sequence Diagram}
+\label{fig:sequence}
+\end{figure}
+
+\newpage
+
+\subsection{Activity Diagrams}
+
+\subsubsection{End User Activity Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=14cm, height=18cm]{SE diagrams/Actiivity-diagram(EndUser).jpeg}
+\caption{Activity Diagram - End User}
+\label{fig:act_user}
+\end{figure}
+
+\newpage
+
+\subsubsection{Maintenance Staff Activity Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=14cm, height=18cm]{SE diagrams/Actiivity-diagram(Maintainence staff).jpeg}
+\caption{Activity Diagram - Maintenance Staff}
+\label{fig:act_staff}
+\end{figure}
+
+\newpage
+
+\subsubsection{Administrator Activity Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=14cm, height=18cm]{SE diagrams/Actiivity-diagram(admin).jpeg}
+\caption{Activity Diagram - Administrator}
+\label{fig:act_admin}
+\end{figure}
+
+\newpage
+
+% 5. STRUCTURAL DIAGRAMS
+\section{Structural Diagrams}
+
+\subsection{Class Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm, height=18cm]{SE diagrams/Class Diagram.png}
+\caption{Class Diagram}
+\label{fig:class}
+\end{figure}
+
+\newpage
+
+\subsection{Component Diagram}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm, height=18cm]{SE diagrams/component-diagram.jpeg}
+\caption{Component Diagram}
+\label{fig:component}
+\end{figure}
+
+\newpage
+
+% 6. REQUIREMENTS-DESIGN TRACEABILITY
+\section{Requirements-Design Traceability}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm, height=18cm]{SE diagrams/tacebilityTable.jpeg}
+\caption{Requirements-Design Traceability Table}
+\label{fig:traceability}
+\end{figure}
+
+\newpage
+
+% 8. PROJECT RESOURCES
+\section{Project Resources}
+
+\subsection{GitHub Repository}
+All project artifacts including diagrams, documentation, and meeting records are maintained in the GitHub repository:
+
+\textbf{Repository URL:}\\
+\url{https://github.com/SundeepKumar07/NAMAL_COMPLAINT_PORTAL}
+
+\subsection{Figma Prototype}
+Complete interactive prototype is available on Figma:
+
+\textbf{Prototype URL:}\\
+\url{https://www.figma.com/proto/eIbQy0a0riT1HzmyEeLnGn/Namal-Complaint-Management-System?node-id=1-3515&t=wrWLPespGuM6k1wc-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=29%3A2&show-proto-sidebar=1}
+
+\subsection{Meeting Minutes}
+Detailed meeting minutes are maintained in Google Sheets:
+
+\textbf{Meeting Minutes URL:}\\
+\url{https://docs.google.com/spreadsheets/d/12_TNwLXdpk1PAGiSt_56hTMgauhxBHHHwzzxx_vtbSQ/edit?gid=0#gid=0}
+
+% 9. MEETING SUMMARY
+\section{Meeting Summary}
+
+\subsection{Meeting Overview}
+Two formal meetings were conducted with the Requirement Provider during this milestone to review and validate the system design.
+
+\subsection{First Meeting - Design Review}
+
+\subsubsection{Key Discussion Points}
+\begin{itemize}
+    \item Presented initial design diagrams (use case, DFD, class diagram)
+    \item Discussed system architecture and component organization
+    \item Reviewed user interface mockups and navigation flow
+    \item Gathered feedback on design approach and assumptions
+\end{itemize}
+
+\subsubsection{Feedback Received}
+\begin{itemize}
+    \item Design approach approved with minor suggestions
+    \item Recommended clearer visual hierarchy in user interfaces
+    \item Suggested adding quick action buttons on dashboard
+    \item Requested color-coding for complaint status and priority
+\end{itemize}
+
+\subsubsection{Action Items}
+\begin{itemize}
+    \item Incorporate feedback into Figma prototype
+    \item Refine sequence and activity diagrams
+    \item Enhance dashboard design with suggested features
+    \item Prepare complete interactive prototype for next meeting
+\end{itemize}
+
+\subsection{Second Meeting - Prototype Demonstration}
+
+\subsubsection{Key Discussion Points}
+\begin{itemize}
+    \item Demonstrated complete interactive Figma prototype
+    \item Walked through all user flows for three roles
+    \item Showed responsive design for different devices
+    \item Reviewed final design diagrams and traceability
+\end{itemize}
+
+\subsubsection{Feedback Received}
+\begin{itemize}
+    \item Interactive prototype approved for implementation
+    \item User interface design meets expectations
+    \item Navigation flow is logical and intuitive
+    \item Color scheme and branding appropriate
+    \item All major requirements covered in design
+\end{itemize}
+
+\subsubsection{Approval Status}
+\begin{itemize}
+    \item System design approved by Requirement Provider
+    \item Prototype validated for all user roles
+    \item Design ready to proceed to implementation phase
+    \item Minor refinements can be made during development
+\end{itemize}
+
+\subsection{Design Validation}
+The system design has been validated through:
+\begin{itemize}
+    \item Review of all UML diagrams with development team
+    \item Two formal meetings with Requirement Provider
+    \item Interactive prototype demonstration and testing
+    \item Requirements traceability verification
+    \item Stakeholder approval obtained
+\end{itemize}
+
+% CONCLUSION
+\section{Conclusion}
+
+This System Design Document provides a comprehensive blueprint for implementing the Namal Complaint Management System. The design has been carefully crafted to:
+
+\begin{itemize}
+    \item Meet all functional and non-functional requirements specified in the SRS
+    \item Follow industry-standard design patterns and UML notation
+    \item Ensure usability through validated interface prototypes
+    \item Maintain complete traceability from requirements to design
+    \item Address all design assumptions and constraints
+\end{itemize}
+
+The design has been validated through formal review meetings with the Requirement Provider and approved for implementation. All design artifacts including diagrams, prototypes, and documentation are available in the project repository.
+
+With this design as foundation, the development team is prepared to proceed with system implementation in the next phase.
+
+\vspace{1cm}
+
+\noindent
+\textbf{Document Prepared by:}\\
+Dev Wizard Team\\
+Department of Computer Science\\
+Namal University, Mianwali
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{Date:} \today
+
+\end{document}

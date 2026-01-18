@@ -60,11 +60,17 @@ Each role has specific permissions and dashboard views to ensure smooth and secu
 
 ---
 
-## ⚙️ Meeting Minutes
+## Meeting Minutes
 
 1. **Google Sheet**
    ```bash
    https://docs.google.com/spreadsheets/d/12_TNwLXdpk1PAGiSt_56hTMgauhxBHHHwzzxx_vtbSQ/edit?gid=0#gid=0
+   
+## Prototype and Design
+
+1. **Figma Prototype**
+   ```bash
+   https://www.figma.com/proto/eIbQy0a0riT1HzmyEeLnGn/Namal-Complaint-Management-System?node-id=1-3382&starting-point-node-id=29%3A2
    
 ## ⚙️ Installation and Setup
 
