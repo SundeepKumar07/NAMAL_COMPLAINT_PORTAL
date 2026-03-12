@@ -1,0 +1,386 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{NCMMS Database Proposal}
+\fancyhead[R]{CSC-271}
+\fancyfoot[C]{\thepage}
+
+% Section formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\begin{document}
+
+% ------------------ TITLE PAGE ------------------
+
+\begin{titlepage}
+
+\centering
+
+\vspace*{1cm}
+
+{\large Namal University, Mianwali\\
+Department of Computer Science\\[2cm]}
+
+{\Huge\bfseries Database Systems Project Proposal\\[0.5cm]}
+
+{\LARGE for\\[0.5cm]}
+
+{\Huge\bfseries Namal Complaint Management System\\[1.5cm]}
+
+{\Large Milestone 1\\[0.3cm]}
+
+{\large \today\\[2cm]}
+
+{\Large Submitted by:\\[0.3cm]}
+
+{\large Dev Wizard Team\\[0.5cm]}
+
+\begin{tabular}{ll}
+Sundeep Kumar & NUM-BSCS-2024-75 \\
+Rehan Tariq & NUM-BSCS-2024-66 \\
+Aimen Shafiq & NUM-BSCS-2024-04 \\
+\end{tabular}
+
+\vfill
+
+{\large CSC-271 -- Database Systems\\[0.3cm]
+Instructor: Ms. Asiya Batool}
+
+\end{titlepage}
+
+% ------------------ TABLE OF CONTENTS ------------------
+
+\tableofcontents
+\newpage
+
+% ------------------ INTRODUCTION ------------------
+
+\section{Introduction}
+
+Efficient management of maintenance complaints is an important aspect of university administration. Educational institutions frequently face maintenance issues such as electrical faults, plumbing problems, furniture damage, and internet connectivity issues. Without a structured data management system, these complaints are often handled informally, which leads to poor record keeping and inefficient resolution processes.
+
+The \textbf{Namal Complaint Management System (NCMMS)} aims to design a relational database that systematically manages maintenance complaints within Namal University. The database will store information related to users, complaint categories, complaints, images, comments, status history, and notifications.
+
+Using \textbf{MySQL} as the database management system, the project will focus on designing a normalized database schema with clearly defined relationships between tables. Proper indexing and constraints will be implemented to ensure efficient data retrieval and strong data integrity.
+
+The proposed database system will enable centralized storage of complaint records and provide a reliable method for tracking complaint progress. It will also allow administrators to analyze complaint data and identify recurring maintenance issues. Through structured data storage and efficient queries, the database will significantly improve the management of maintenance complaints at Namal University.
+
+% ------------------ PROBLEM STATEMENT ------------------
+
+\section{Problem Statement}
+
+Currently, maintenance complaints at Namal University are managed through informal communication methods such as verbal reporting or personal messages. This approach lacks a systematic method for storing and managing complaint records.
+
+Without a centralized database, complaints cannot be tracked properly. Many complaints may be forgotten, delayed, or resolved without proper documentation. This creates difficulty in monitoring maintenance activities and evaluating the performance of maintenance staff.
+
+Another issue with the current system is the lack of historical records. Since complaints are not stored in a structured format, administrators cannot easily retrieve previous complaint information or analyze common maintenance issues. This limits the ability of the university to make data-driven decisions regarding infrastructure improvements.
+
+Furthermore, the absence of a structured complaint tracking system reduces transparency and accountability. It becomes difficult to determine when a complaint was submitted, who handled it, and how long the resolution process took.
+
+Therefore, there is a need for a structured relational database that can store complaint records, maintain status updates, and support efficient retrieval of maintenance data.
+
+\newpage
+
+% ------------------ OBJECTIVES ------------------
+
+\section{Objectives}
+
+The main objective of this project is to design a structured relational database for managing maintenance complaints at Namal University.
+
+\begin{enumerate}
+
+\item Design a normalized relational database schema consisting of seven tables to ensure minimal redundancy and efficient data organization.
+
+\item Create a centralized database that stores complaint records, user information, categories, and updates.
+
+\item Maintain a complete complaint lifecycle by recording status changes and comments related to each complaint.
+
+\item Support efficient complaint retrieval using SQL queries and indexing strategies.
+
+\item Ensure data integrity using relational constraints such as primary keys and foreign keys.
+
+\end{enumerate}
+
+% ------------------ SCOPE ------------------
+
+\section{Scope}
+
+The scope of the Namal Complaint Management System project is limited to database design and data management. The project focuses on creating a relational database that stores and manages complaint information in a structured manner.
+
+The database will include seven tables: \textbf{users, categories, complaints, complaint\_images, comments, status\_history, and notifications}. These tables will store all necessary data required for managing maintenance complaints.
+
+The project includes the design of an Entity Relationship Diagram (ERD), relational schema definitions, normalization of tables, and the creation of SQL queries for retrieving and analyzing complaint data.
+
+However, this project does not include the development of any user interface or web application. The focus remains entirely on database schema design and data management.
+
+% ------------------ DATA COLLECTION ------------------
+
+\section{Data Collection}
+
+The data required for the Namal Complaint Management System will be collected from various sources to design a structured database system. The collected data will be organized into different tables according to system requirements.
+
+\begin{enumerate}
+
+\item \textbf{Users Data} – Information about all system users including students, staff, and administrators will be collected from university records. This data will be stored in the \textbf{users} table and will include user ID, name, email, role, and login credentials.
+
+\item \textbf{Complaint Data} – Complaint details will be collected through complaint submission forms filled by users. This data will be stored in the \textbf{complaints} table and will include complaint title, description, category, submission date, and complaint status.
+
+\item \textbf{Complaint Categories Data} – Different types of complaints such as electrical, plumbing, internet issues, and classroom maintenance will be defined by the administration and stored in the \textbf{categories} table.
+
+\item \textbf{Complaint Images Data} – Image URLs related to complaints will be stored in the \textbf{complaint\_images} table.
+
+\item \textbf{Comments Data} – Communication related to complaints will be stored in the \textbf{comments} table.
+
+\item \textbf{Status History Data} – Changes in complaint status during its lifecycle will be recorded in the \textbf{status\_history} table.
+
+\item \textbf{Notification Data} – System generated notifications such as complaint updates will be stored in the \textbf{notifications} table.
+
+\end{enumerate}
+
+% ------------------ TECHNOLOGY STACK ------------------
+
+\section{Technology Stack}
+
+The following technologies will be used to design and implement the database system.
+
+\begin{enumerate}
+
+\item \textbf{Database Management System (DBMS): MySQL}
+
+MySQL will be used to create and manage the relational database for storing system data including users, complaints, categories, comments, and notifications.
+
+\item \textbf{Database Design Tool: MySQL Workbench}
+
+MySQL Workbench will be used for designing the database schema, creating Entity Relationship diagrams, and managing database tables.
+
+\item \textbf{Query Language: SQL}
+
+SQL will be used for creating tables such as users, complaints, categories, comments, notifications, complaint\_images, and status\_history.
+
+\item \textbf{Version Control Platform: GitHub}
+
+GitHub will be used for maintaining version control of project files.
+
+\item \textbf{Development Environment: MySQL Command Line Client}
+
+The MySQL Command Line Client will be used to execute SQL queries and test database operations.
+
+\end{enumerate}
+
+% ------------------ SYSTEM FUNCTIONALITY ------------------
+
+\section{System Functionality}
+
+The Namal Complaint Management System will provide the following key functionalities.
+
+\begin{enumerate}
+
+\item \textbf{User Management} – The system will manage different types of users using the \textbf{users} table.
+
+\item \textbf{Complaint Submission} – Users will submit complaints which will be stored in the \textbf{complaints} table.
+
+\item \textbf{Complaint Categorization} – Each complaint will be assigned to a specific category using the \textbf{categories} table.
+
+\item \textbf{Image Association} – Complaints may include images stored in the \textbf{complaint\_images} table.
+
+\item \textbf{Complaint Discussion} – Communication regarding complaints will be stored in the \textbf{comments} table.
+
+\item \textbf{Status Tracking} – Complaint status changes will be recorded in the \textbf{status\_history} table.
+
+\item \textbf{Notification System} – Notifications regarding complaint updates will be stored in the \textbf{notifications} table.
+
+\item \textbf{Complaint Monitoring} – Administrators will monitor complaint status and ensure timely resolution.
+
+\end{enumerate}
+
+
+
+% 8. USER CLASSES
+\section{User Classes}
+
+The database design supports three primary user classes, each interacting with the stored data in different ways. While access control mechanisms are typically implemented at the application level, the database schema is structured to support role-based access and data organization.
+
+\subsection{End Users (Students, Faculty, and Staff)}
+
+End Users represent the primary source of complaint records in the system. These users generate complaint data that is stored in the database. Their interactions involve submitting complaints and viewing related information such as complaint status updates and comments. The database stores their identification details and links their records to submitted complaints.
+
+\textbf{Database Access Level:}
+\begin{itemize}
+    \item INSERT operations on complaints table
+    \item SELECT operations on their own complaint records
+    \item INSERT operations on comments table
+    \item SELECT operations on notifications table
+\end{itemize}
+
+\subsection{Maintenance Staff}
+
+Maintenance Staff are responsible for resolving complaints recorded in the database. They access complaint records assigned to them and update relevant fields such as complaint status, work notes, and completion details. Their activities generate additional data entries in tables such as comments and status\_history, ensuring that maintenance actions are documented.
+
+\textbf{Database Access Level:}
+\begin{itemize}
+    \item SELECT operations on assigned complaints
+    \item UPDATE operations on complaint status
+    \item INSERT operations on comments and status\_history
+    \item INSERT operations on complaint\_images (completion photos)
+\end{itemize}
+
+\subsection{Administrators}
+
+Administrators manage the overall maintenance complaint workflow from a data management perspective. They are responsible for managing user records, assigning complaints to maintenance staff, and reviewing statistical reports generated through SQL queries. Administrators also ensure that data integrity is maintained by monitoring complaint records and system activity.
+
+\textbf{Database Access Level:}
+\begin{itemize}
+    \item Full CRUD operations on all tables
+    \item Complex SELECT queries for reporting and analytics
+    \item UPDATE operations for complaint assignment
+    \item Data export and backup operations
+\end{itemize}
+
+The database schema is structured to support these different user classes while maintaining clear relationships between users, complaints, and associated records.
+
+% 9. TASK DIVISION
+\section{Task Division}
+
+The project team consists of three members, each responsible for specific aspects of the database design and implementation process. The division of responsibilities ensures that all components of the database system are developed efficiently and collaboratively.
+
+\subsection{Team Member Responsibilities}
+
+\subsubsection{Sundeep Kumar (NUM-BSCS-2024-75)}
+\textbf{Role:} Database Schema Design and ER Modeling
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Design the core database schema structure
+    \item Develop entity-relationship diagrams (ERD)
+    \item Identify entities and define relationships between tables
+    \item Establish primary and foreign key constraints
+    \item Prepare relational schema documentation
+    \item Ensure database design follows normalization principles
+\end{itemize}
+
+\subsubsection{Rehan Tariq (NUM-BSCS-2024-66)}
+\textbf{Role:} Query Optimization and Stored Procedures
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Write efficient SQL queries for complaint retrieval
+    \item Develop reporting and statistical analysis queries
+    \item Implement stored procedures for complex operations
+    \item Explore indexing strategies for performance improvement
+    \item Optimize query execution time
+    \item Document query patterns and optimization techniques
+\end{itemize}
+
+\subsubsection{Aimen Shafiq (NUM-BSCS-2024-04)}
+\textbf{Role:} Database Normalization and Testing
+
+\textbf{Responsibilities:}
+\begin{itemize}
+    \item Verify schema satisfies normalization rules (1NF, 2NF, 3NF)
+    \item Test relational constraints and data integrity
+    \item Validate sample data entries
+    \item Perform query testing for efficiency
+    \item Document normalization process
+    \item Create test cases for database operations
+\end{itemize}
+
+This structured task division ensures that the project addresses all key aspects of database design, optimization, and validation.
+
+% 10. CONCLUSION
+\section{Conclusion}
+
+The Namal Complaint Management System database project aims to design a structured and reliable relational database for managing maintenance complaints within Namal University. By replacing the current informal complaint handling process with a centralized data management system, the project will improve the organization, accessibility, and reliability of maintenance information.
+
+The proposed database schema will ensure efficient storage of complaint records, user data, and related information while maintaining strong relational integrity. Through normalization and relational constraints, the database will minimize redundancy and maintain data consistency across multiple tables.
+
+Furthermore, the system will support advanced querying capabilities that allow administrators to generate meaningful reports and analyze complaint patterns. Such analysis can help identify frequently occurring issues, evaluate maintenance staff performance, and support informed decision-making for campus infrastructure improvements.
+
+Although the project focuses solely on database design, the resulting schema will provide a strong foundation for future system integration if an application layer is later developed. The structured design will ensure scalability and adaptability for additional features.
+
+Overall, the NCMMS database design will contribute to improved complaint tracking, enhanced transparency in maintenance operations, and more efficient management of campus maintenance activities through effective data organization and retrieval. The project deliverables will include comprehensive documentation, normalized schema design, optimized queries, and a fully tested database system ready for deployment.
+
+\newpage
+
+% 11. REFERENCES
+\section{References}
+
+\begin{enumerate}
+    \item Elmasri, R., \& Navathe, S. B. (2016). \textit{Fundamentals of Database Systems} (7th ed.). Pearson.
+    
+    \item Silberschatz, A., Korth, H. F., \& Sudarshan, S. (2019). \textit{Database System Concepts} (7th ed.). McGraw-Hill Education.
+    
+    \item Coronel, C., \& Morris, S. (2018). \textit{Database Systems: Design, Implementation, \& Management}. Cengage Learning.
+    
+    \item MySQL Documentation. (2024). \textit{MySQL 8.0 Reference Manual}. Oracle Corporation. Retrieved from \url{https://dev.mysql.com/doc/}
+    
+    \item Connolly, T., \& Begg, C. (2015). \textit{Database Systems: A Practical Approach to Design, Implementation, and Management}. Pearson.
+    
+    \item NCMMS Project Repository. (2026). GitHub. Retrieved from \url{https://github.com/SundeepKumar07/NAMAL_COMPLAINT_PORTAL}
+\end{enumerate}
+
+% APPENDIX
+\appendix
+
+\section{AI Tools Usage}
+
+\subsection{AI Tools Utilized}
+
+During the preparation of this proposal, the following AI tools were used for understanding concepts, generating ideas, and structuring content:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{AI Tool} & \textbf{Purpose} & \textbf{Date Accessed} \\
+\hline
+ChatGPT (OpenAI) & Database design concepts, normalization principles, proposal structure & \today \\
+\hline
+Claude AI & Schema design review, query optimization suggestions & \today \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Sample AI Prompts Used}
+
+\subsubsection{Prompt 1: Database Schema Design}
+\textit{"Help me design a normalized database schema for a complaint management system with 7 tables focusing on users, complaints, categories, images, comments, status history, and notifications. Explain the relationships and foreign keys."}
+
+\textbf{Purpose:} Understanding relational database design principles and table relationships.
+
+\subsubsection{Prompt 2: Normalization}
+\textit{"Explain how to normalize a database schema to Third Normal Form (3NF) with examples relevant to a complaint tracking system."}
+
+\textbf{Purpose:} Learning normalization techniques and applying them to the project schema.
+
+\subsubsection{Prompt 3: Query Optimization}
+\textit{"What indexing strategies should be used for a complaints table that will be frequently searched by status, category, and date? Provide SQL examples."}
+
+\textbf{Purpose:} Understanding indexing strategies for performance optimization.
+
+\subsubsection{Prompt 4: Proposal Structure}
+\textit{"Help me write a database project proposal following academic standards, focusing only on database design aspects without mentioning frontend or backend development."}
+
+\textbf{Purpose:} Structuring the proposal document professionally.
+
+\subsection{Acknowledgment}
+
+All AI-generated content was reviewed, validated, and customized by the team members to ensure accuracy and relevance to the project requirements. The AI tools served as learning aids and were not used to replace original thinking or analysis.
+
+\end{document}
