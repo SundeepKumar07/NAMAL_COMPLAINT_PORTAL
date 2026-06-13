@@ -1,0 +1,1006 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Admin = sequelize.define(
+  'Admin',
+  {
+    user_id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
+    access_level: {
+      type: DataTypes.ENUM('superadmin', 'system_admin'),
+      defaultValue: 'system_admin',
+    },
+    designation: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'admins',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Admin;
+
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const AttachmentType = sequelize.define(
+  'AttachmentType',
+  {
+    attachment_type_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    type_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true,
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'attachment_types',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = AttachmentType;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const AuditLog = sequelize.define(
+  'AuditLog',
+  {
+    audit_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
+    action_type: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    affected_table: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
+    action_time: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    details: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'audit_logs',
+    timestamps: false,
+  }
+);
+
+module.exports = AuditLog;
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Building = sequelize.define(
+  'Building',
+  {
+    building_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    building_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    campus_area: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
+    floors: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'buildings',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Building;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Category = sequelize.define(
+  'Category',
+  {
+    category_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    category_name: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true,
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'categories',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Category;
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Comment = sequelize.define(
+  'Comment',
+  {
+    comment_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    comment_type: {
+      type: DataTypes.ENUM('user', 'staff', 'admin', 'system'),
+      defaultValue: 'user',
+    },
+    comment_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'comments',
+    timestamps: false,
+  }
+);
+
+module.exports = Comment;
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Complaint = sequelize.define(
+  'Complaint',
+  {
+    complaint_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    ticket_id: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      unique: true,
+    },
+    title: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    expected_resolution_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    submitted_by: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    priority_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    location_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'complaints',
+    timestamps: true,
+    createdAt: 'submitted_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Complaint;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const ComplaintAssignment = sequelize.define(
+  'ComplaintAssignment',
+  {
+    assignment_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+    },
+    assigned_to: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    assigned_by: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    assigned_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'complaint_assignments',
+    timestamps: false,
+  }
+);
+
+module.exports = ComplaintAssignment;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const ComplaintImage = sequelize.define(
+  'ComplaintImage',
+  {
+    image_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    attachment_type_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    uploaded_by: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    image_url: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+    },
+    uploaded_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'complaint_images',
+    timestamps: false,
+  }
+);
+
+module.exports = ComplaintImage;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const ComplaintStatus = sequelize.define(
+  'ComplaintStatus',
+  {
+    status_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    status_name: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'complaint_statuses',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = ComplaintStatus;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Department = sequelize.define(
+  'Department',
+  {
+    department_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    department_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    faculty_name: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'departments',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Department;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const EndUser = sequelize.define(
+  'EndUser',
+  {
+    user_id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
+    department_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    user_type: {
+      type: DataTypes.ENUM('student', 'faculty', 'staff'),
+      allowNull: false,
+    },
+    university_id: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
+  },
+  {
+    tableName: 'end_users',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = EndUser;
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Feedback = sequelize.define(
+  'Feedback',
+  {
+    feedback_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: { min: 1, max: 5 },
+    },
+    feedback_text: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    submitted_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'feedbacks',
+    timestamps: false,
+  }
+);
+
+module.exports = Feedback;
+
+
+const sequelize = require('../config/db');
+const User = require('./User');
+const Department = require('./Department');
+const EndUser = require('./EndUser');
+const Admin = require('./Admin');
+const MaintenanceStaff = require('./MaintenanceStaff');
+const StaffSpecialization = require('./StaffSpecialization');
+const Building = require('./Building');
+const Location = require('./Location');
+const Category = require('./Category');
+const PriorityLevel = require('./PriorityLevel');
+const ComplaintStatus = require('./ComplaintStatus');
+const Complaint = require('./Complaint');
+const AttachmentType = require('./AttachmentType');
+const ComplaintImage = require('./ComplaintImage');
+const ComplaintAssignment = require('./ComplaintAssignment');
+const StatusHistory = require('./StatusHistory');
+const WorkLog = require('./WorkLog');
+const Resolution = require('./Resolution');
+const Comment = require('./Comment');
+const Feedback = require('./Feedback');
+const NotificationTemplate = require('./NotificationTemplate');
+const Notification = require('./Notification');
+const AuditLog = require('./AuditLog');
+
+// User hierarchy
+User.hasOne(EndUser, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+EndUser.belongsTo(User, { foreignKey: 'user_id' });
+EndUser.belongsTo(Department, { foreignKey: 'department_id' });
+Department.hasMany(EndUser, { foreignKey: 'department_id' });
+
+User.hasOne(Admin, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Admin.belongsTo(User, { foreignKey: 'user_id' });
+
+User.hasOne(MaintenanceStaff, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+MaintenanceStaff.belongsTo(User, { foreignKey: 'user_id' });
+
+MaintenanceStaff.hasMany(StaffSpecialization, { foreignKey: 'staff_id', onDelete: 'CASCADE' });
+StaffSpecialization.belongsTo(MaintenanceStaff, { foreignKey: 'staff_id' });
+StaffSpecialization.belongsTo(Category, { foreignKey: 'category_id' });
+Category.hasMany(StaffSpecialization, { foreignKey: 'category_id' });
+
+// Infrastructure
+Building.hasMany(Location, { foreignKey: 'building_id', onDelete: 'CASCADE' });
+Location.belongsTo(Building, { foreignKey: 'building_id' });
+
+// Complaints
+User.hasMany(Complaint, { foreignKey: 'submitted_by', as: 'submittedComplaints' });
+Complaint.belongsTo(User, { foreignKey: 'submitted_by', as: 'submitter' });
+Complaint.belongsTo(Category, { foreignKey: 'category_id' });
+Complaint.belongsTo(ComplaintStatus, { foreignKey: 'status_id', as: 'status' });
+Complaint.belongsTo(PriorityLevel, { foreignKey: 'priority_id', as: 'priority' });
+Complaint.belongsTo(Location, { foreignKey: 'location_id' });
+
+Complaint.hasMany(ComplaintImage, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+ComplaintImage.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+ComplaintImage.belongsTo(AttachmentType, { foreignKey: 'attachment_type_id' });
+ComplaintImage.belongsTo(User, { foreignKey: 'uploaded_by', as: 'uploader' });
+
+Complaint.hasOne(ComplaintAssignment, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+ComplaintAssignment.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+ComplaintAssignment.belongsTo(MaintenanceStaff, { foreignKey: 'assigned_to', as: 'assignee' });
+ComplaintAssignment.belongsTo(User, { foreignKey: 'assigned_by', as: 'assigner' });
+
+Complaint.hasMany(StatusHistory, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+StatusHistory.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+StatusHistory.belongsTo(ComplaintStatus, { foreignKey: 'old_status_id', as: 'oldStatus' });
+StatusHistory.belongsTo(ComplaintStatus, { foreignKey: 'new_status_id', as: 'newStatus' });
+StatusHistory.belongsTo(User, { foreignKey: 'changed_by', as: 'changer' });
+
+Complaint.hasMany(WorkLog, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+WorkLog.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+WorkLog.belongsTo(MaintenanceStaff, { foreignKey: 'staff_id', as: 'staff' });
+
+Complaint.hasOne(Resolution, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+Resolution.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+Resolution.belongsTo(MaintenanceStaff, { foreignKey: 'resolved_by', as: 'resolver' });
+
+Complaint.hasMany(Comment, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+Comment.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+Comment.belongsTo(User, { foreignKey: 'user_id', as: 'author' });
+
+Complaint.hasOne(Feedback, { foreignKey: 'complaint_id', onDelete: 'CASCADE' });
+Feedback.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+Feedback.belongsTo(User, { foreignKey: 'user_id', as: 'reviewer' });
+
+User.hasMany(Notification, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Notification.belongsTo(User, { foreignKey: 'user_id' });
+Notification.belongsTo(Complaint, { foreignKey: 'complaint_id' });
+Notification.belongsTo(NotificationTemplate, { foreignKey: 'template_id' });
+
+User.hasMany(AuditLog, { foreignKey: 'user_id' });
+AuditLog.belongsTo(User, { foreignKey: 'user_id' });
+
+module.exports = {
+  sequelize,
+  User,
+  Department,
+  EndUser,
+  Admin,
+  MaintenanceStaff,
+  StaffSpecialization,
+  Building,
+  Location,
+  Category,
+  PriorityLevel,
+  ComplaintStatus,
+  Complaint,
+  AttachmentType,
+  ComplaintImage,
+  ComplaintAssignment,
+  StatusHistory,
+  WorkLog,
+  Resolution,
+  Comment,
+  Feedback,
+  NotificationTemplate,
+  Notification,
+  AuditLog,
+};
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Location = sequelize.define(
+  'Location',
+  {
+    location_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    building_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    room_no: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    floor_no: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'locations',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = Location;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const MaintenanceStaff = sequelize.define(
+  'MaintenanceStaff',
+  {
+    user_id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
+    staff_code: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
+    availability_status: {
+      type: DataTypes.ENUM('available', 'busy', 'off_duty'),
+      defaultValue: 'available',
+    },
+    workload_count: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+  },
+  {
+    tableName: 'maintenance_staff',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = MaintenanceStaff;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Notification = sequelize.define(
+  'Notification',
+  {
+    notification_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
+    template_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    message: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    is_read: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'notifications',
+    timestamps: false,
+  }
+);
+
+module.exports = Notification;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const NotificationTemplate = sequelize.define(
+  'NotificationTemplate',
+  {
+    template_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    template_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+    template_text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'notification_templates',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = NotificationTemplate;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const PriorityLevel = sequelize.define(
+  'PriorityLevel',
+  {
+    priority_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    priority_name: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    response_time_hours: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    hours_resolution: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'priority_levels',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = PriorityLevel;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const Resolution = sequelize.define(
+  'Resolution',
+  {
+    resolution_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+    },
+    resolved_by: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    resolved_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    resolution_summary: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    resolution_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'resolutions',
+    timestamps: false,
+  }
+);
+
+module.exports = Resolution;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const StaffSpecialization = sequelize.define(
+  'StaffSpecialization',
+  {
+    staff_spec_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    staff_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    proficiency_level: {
+      type: DataTypes.ENUM('beginner', 'intermediate', 'expert'),
+      defaultValue: 'intermediate',
+    },
+  },
+  {
+    tableName: 'staff_specializations',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = StaffSpecialization;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const StatusHistory = sequelize.define(
+  'StatusHistory',
+  {
+    history_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    old_status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    new_status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    changed_by: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    remarks: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
+    },
+    changed_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'status_history',
+    timestamps: false,
+  }
+);
+
+module.exports = StatusHistory;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const User = sequelize.define(
+  'User',
+  {
+    user_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    full_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+      unique: true,
+      validate: { isEmail: true },
+    },
+    password: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    phone_no: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    account_status: {
+      type: DataTypes.ENUM('active', 'inactive', 'suspended'),
+      defaultValue: 'active',
+    },
+    role_type: {
+      type: DataTypes.ENUM('end_user', 'maintenance_staff', 'admin'),
+      allowNull: false,
+    },
+    profile_picture: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
+    },
+  },
+  {
+    tableName: 'users',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  }
+);
+
+module.exports = User;
+
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
+
+const WorkLog = sequelize.define(
+  'WorkLog',
+  {
+    worklog_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    complaint_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    staff_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    work_note: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    logged_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    tableName: 'work_logs',
+    timestamps: false,
+  }
+);
+
+module.exports = WorkLog;
