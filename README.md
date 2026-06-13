@@ -54,7 +54,7 @@ Each role has specific permissions and dashboard views to ensure smooth and secu
 |-----------|-------------|
 | Frontend | React.js, Tailwind CSS |
 | Backend | Node.js, Express.js |
-| Database | MongoDB |
+| Database | MySQL |
 | Authentication | JWT (JSON Web Token) |
 | Hosting | Vercel |
 
